@@ -6,8 +6,15 @@ using UnityEngine;
 public class ThirdPersonController : MonoBehaviour
 {
     Transform cameraTransform;
+    [Header("References")]
+    public Transform player_root;
     public Transform modelTransform;
+    public LineRenderer lr;
+    public Transform lasso_throw_pos;
+    public LayerMask swingable;
 
+
+    [Header("Movement")]
     public float max_speed = 15.0f;
     public float accel_rate = (50.0f * 0.5f) / 15.0f;
     public float decel_rate = 40.0f;
@@ -15,10 +22,18 @@ public class ThirdPersonController : MonoBehaviour
     public float decel_in_air_rate = 0.8f;
     public bool conserve_momentum = true;
 
+    [Header("Swinging")]
+    private float swing_reach_distance = 25f;
+    private Vector3 swing_point;
+    private SpringJoint swing_joint;
+    private Vector3 current_rope_end_pos;
+
+    [Header("Input")]
+    public KeyCode swingKey = KeyCode.Mouse0;
     public float LastOnGroundTime { get; private set; }
 
-
     private Vector3 _moveInput;
+
 
     void Start()
     {
@@ -38,36 +53,8 @@ public class ThirdPersonController : MonoBehaviour
             LastOnGroundTime = 0.1f;
         }
 
-
-        //print("Relative speed is: " + GetRelativeTangentVelocity().magnitude);
-        //Vector3 target_speed = new Vector3(horizontal, 0, vertical).normalized * speed;
-        //Vector3 relative_vel = GetComponent<Rigidbody>().GetRelativePointVelocity(Vector3.zero);
-        //print("Relative velocity is: " + relative_vel);
-        //relative_vel.y = 0;
-        //
-        //moveAmount = speed_diff * accel_rate;
-
-
-        //bool jump = Input.GetButtonDown("Jump");
-        //Vector3 direction = new Vector3 (horizontal, 0, vertical).normalized;
-        //if (jump && GetComponent<GravityObject>().IsOnGround())
-        //{
-        //    print("Jump pressed");
-        //    direction += new Vector3(0, jump_impulse, 0);
-        //}
-        //moveAmount = direction;
-
-        //bool released = Input.GetButtonUp("Horizontal") || Input.GetButtonUp("Vertical");
-        //if (released && moveAmount.magnitude <= 0)
-        //{
-        //    print("Magnitude <= 0");
-        //    GetComponent<Rigidbody>().AddForce(-GetComponent<Rigidbody>().GetAccumulatedForce());
-        //    GetComponent<Rigidbody>().velocity = Vector3.zero;
-        //    moveAmount = Vector3.zero;
-        //}
-        //Vector3 targetMoveAmount = direction * speed;
-
-        //moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, 0.15f);
+        if (Input.GetKeyDown(swingKey)) { StartSwing(); }
+        if (Input.GetKeyUp(swingKey)) { EndSwing(); }
 
     }
 
@@ -102,22 +89,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             modelTransform.rotation = Quaternion.LookRotation(_moveInput, transform.up);
         }
-
-
-        //Vector3 up_basis = transform.up;
-        //Vector3 forward_basis = Vector3.Cross(up_basis, cameraTransform.transform.right).normalized;
-        //Vector3 right_basis = Vector3.Cross(forward_basis, up_basis).normalized;
-
-        //print("Current Vel Target: " + targetVelocity);
-
-        //print(("Basises: \n Up: " + up_basis + "\n Forward: " + forward_basis + "\n Right: " + right_basis));
-        //targetVelocity = new Vector3(
-        //    right_basis.x * targetVelocity.x + right_basis.y * targetVelocity.y + right_basis.z * targetVelocity.z,
-        //    up_basis.x * targetVelocity.x + up_basis.y * targetVelocity.y + up_basis.z * targetVelocity.z,
-        //    forward_basis.x * targetVelocity.x + forward_basis.y * targetVelocity.y + forward_basis.z * targetVelocity.z
-        //);
-
-        //print("New Vel Target: " + targetVelocity);
 
         float accelRate;
 
@@ -160,5 +131,54 @@ public class ThirdPersonController : MonoBehaviour
 
         
         GetComponent<Rigidbody>().AddForce(movement);
+    }
+
+    void StartSwing()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, swing_reach_distance, swingable))
+        {
+            swing_point = hit.point;
+            swing_joint = player_root.gameObject.AddComponent<SpringJoint>();
+            swing_joint.autoConfigureConnectedAnchor = false;
+            swing_joint.connectedAnchor = swing_point;
+
+            float distance_from_point = Vector3.Distance(player_root.position, swing_point);
+
+            swing_joint.minDistance = distance_from_point * 0.8f;
+            swing_joint.maxDistance = distance_from_point * 0.25f;
+
+            current_rope_end_pos = lasso_throw_pos.position;
+
+            swing_joint.spring = 4.5f;
+            swing_joint.damper = 7f;
+            swing_joint.massScale = 4.5f;
+
+            lr.positionCount = 2;
+        }
+    }
+    
+    void EndSwing()
+    {
+        lr.positionCount = 0;
+        Destroy(swing_joint);
+    }
+
+    void DrawRope()
+    {
+        if (!swing_joint)
+        {
+            return;
+        }
+
+        current_rope_end_pos = Vector3.Lerp(current_rope_end_pos, swing_point, Time.deltaTime * 8.0f);
+
+        lr.SetPosition(0, lasso_throw_pos.position);
+        lr.SetPosition(1, current_rope_end_pos);
+    }
+
+    private void LateUpdate()
+    {
+        DrawRope();
     }
 }
