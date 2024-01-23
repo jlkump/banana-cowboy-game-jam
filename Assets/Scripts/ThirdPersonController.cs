@@ -15,29 +15,45 @@ public class ThirdPersonController : MonoBehaviour
 
 
     [Header("Movement")]
-    public float max_speed = 15.0f;
+    public float max_walk_speed = 8.0f;
+    public float max_run_speed = 12.0f;
     public float accel_rate = (50.0f * 0.5f) / 15.0f;
-    public float decel_rate = 40.0f;
+    public float decel_rate = (100.0f * 0.5f) / 15.0f;
     public float accel_in_air_rate = 0.8f;
     public float decel_in_air_rate = 0.8f;
+    public float jump_impulse_force = 10.0f;
+    public float gravity_mult_on_jump_release = 3.0f;
     public bool conserve_momentum = true;
+    public float LastOnGroundTime { get; private set; }
 
     [Header("Swinging")]
-    private float swing_reach_distance = 25f;
+    public float swing_reach_distance = 25f;
     private Vector3 swing_point;
     private SpringJoint swing_joint;
     private Vector3 current_rope_end_pos;
 
     [Header("Input")]
     public KeyCode swingKey = KeyCode.Mouse0;
-    public float LastOnGroundTime { get; private set; }
+    public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
 
     private Vector3 _moveInput;
+
+    enum State
+    {
+        AIR,
+        WALK,
+        RUN,
+        SWING,
+    };
+    private State state = State.AIR;
 
 
     void Start()
     {
         cameraTransform = Camera.main.transform;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
     }
 
     void Update()
@@ -51,11 +67,17 @@ public class ThirdPersonController : MonoBehaviour
         if (GetComponent<GravityObject>().IsOnGround())
         {
             LastOnGroundTime = 0.1f;
+            state = Input.GetKeyDown(sprintKey) ? State.RUN : State.WALK;
+            if (Input.GetKeyDown(jumpKey)) { StartJump(); }
+        }
+        else if (state != State.SWING)
+        {
+            state = State.AIR;
         }
 
         if (Input.GetKeyDown(swingKey)) { StartSwing(); }
         if (Input.GetKeyUp(swingKey)) { EndSwing(); }
-
+        if (Input.GetKeyUp(jumpKey)) { EndJump(); }
     }
 
     void FixedUpdate()
@@ -83,7 +105,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         _moveInput = cameraTransform.TransformDirection(_moveInput);
         _moveInput = Vector3.Dot(transform.right, _moveInput) * transform.right + Vector3.Dot(transform.forward, _moveInput) * transform.forward;
-        Vector3 targetVelocity = _moveInput * max_speed;
+        Vector3 targetVelocity = _moveInput * max_walk_speed;
         float targetSpeed = targetVelocity.magnitude;
         if (targetSpeed > 0 && modelTransform != null)
         {
@@ -138,6 +160,7 @@ public class ThirdPersonController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, swing_reach_distance, swingable))
         {
+            state = State.SWING;
             swing_point = hit.point;
             swing_joint = player_root.gameObject.AddComponent<SpringJoint>();
             swing_joint.autoConfigureConnectedAnchor = false;
@@ -160,6 +183,7 @@ public class ThirdPersonController : MonoBehaviour
     
     void EndSwing()
     {
+        state = State.WALK; // Will be corrected on next update if wrong
         lr.positionCount = 0;
         Destroy(swing_joint);
     }
@@ -180,5 +204,18 @@ public class ThirdPersonController : MonoBehaviour
     private void LateUpdate()
     {
         DrawRope();
+    }
+
+    void StartJump()
+    {
+        //_is_jumping = true;
+        GetComponent<Rigidbody>().AddForce(transform.up * jump_impulse_force, ForceMode.Impulse);
+        GetComponent<GravityObject>().gravity_mult = 1.0f;
+    }
+
+    void EndJump()
+    {
+        //_is_jumping = false;
+        GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
     }
 }

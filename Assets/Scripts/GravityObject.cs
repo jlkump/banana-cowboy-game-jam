@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (Rigidbody))]
+[RequireComponent(typeof(Rigidbody))]
 public class GravityObject : MonoBehaviour
 {
     GravityAttractor planet;
     bool on_ground = false;
+
+    public float max_fall_speed { get; set; } = 40.0f;
+    public float gravity_mult { get; set; } = 1.0f;
 
     void Awake()
     {
@@ -21,27 +24,23 @@ public class GravityObject : MonoBehaviour
         planet.Reorient(transform);
         if (planet != null && !on_ground)
         {
-            planet.Attract(transform);
+            planet.Attract(transform, max_fall_speed, gravity_mult);
             
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        print("Collision enter with " + collision.gameObject.name);
         if (planet != null && collision.gameObject.tag == planet.tag)
         {
-            print("Is on ground");
             on_ground = true;
         }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        print("Collision exit with " + collision.gameObject.name);
         if (planet != null && collision.gameObject.tag == planet.tag)
         {
-            print("Is not on ground");
             on_ground = false;
         }
     }
