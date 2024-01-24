@@ -13,6 +13,8 @@ public class ThirdPersonController : MonoBehaviour
     public Transform lasso_throw_pos;
     public LayerMask swingable;
 
+    //public Transform temp;
+
 
     [Header("Movement")]
     public float max_walk_speed = 8.0f;
@@ -24,6 +26,7 @@ public class ThirdPersonController : MonoBehaviour
     public float jump_impulse_force = 10.0f;
     public float gravity_mult_on_jump_release = 3.0f;
     public bool conserve_momentum = true;
+    public float dash_force;
     public float LastOnGroundTime { get; private set; }
 
     [Header("Swinging")]
@@ -58,7 +61,19 @@ public class ThirdPersonController : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            UIManager.ChangeHealth(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            UIManager.ChangeHealth(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Dash();
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         _moveInput = new Vector3(horizontal, 0, vertical).normalized;
@@ -110,6 +125,7 @@ public class ThirdPersonController : MonoBehaviour
         if (targetSpeed > 0 && modelTransform != null)
         {
             modelTransform.rotation = Quaternion.LookRotation(_moveInput, transform.up);
+            //temp.rotation = Quaternion.LookRotation(_moveInput, transform.up);
         }
 
         float accelRate;
@@ -217,5 +233,11 @@ public class ThirdPersonController : MonoBehaviour
     {
         //_is_jumping = false;
         GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
+    }
+
+    void Dash()
+    {
+        //GetComponent<Rigidbody>().AddForce(temp.transform.forward * dash_force, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(modelTransform.forward * dash_force, ForceMode.Impulse);
     }
 }
