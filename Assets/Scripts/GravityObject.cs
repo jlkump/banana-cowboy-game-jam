@@ -9,7 +9,7 @@ public class GravityObject : MonoBehaviour
     bool on_ground = false;
 
     public float max_fall_speed { get; set; } = 40.0f;
-    public float gravity_mult { get; set; } = 1.0f;
+    public float gravity_mult { get; set; } = 1.5f;
 
     void Awake()
     {

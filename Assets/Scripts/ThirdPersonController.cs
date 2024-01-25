@@ -27,10 +27,16 @@ public class ThirdPersonController : MonoBehaviour
     public float gravity_mult_on_jump_release = 3.0f;
     public bool conserve_momentum = true;
     public float dash_force;
-    private bool canDash = true;
-    private float dashCooldown = 0.75f;
-    private float dashTimer = 0.0f;
+    private bool can_Dash = true;
+    private float dash_Cooldown = 0.75f;
+    private float dash_Timer = 0.0f;
     public float LastOnGroundTime { get; private set; }
+
+    [Header("Buffer System")]
+    public float jump_hold_buffer = 0.3f;
+    private float jump_hold_buffer_timer;
+    public float jump_buffer = 0.1f;
+    private float jump_buffer_timer;
 
     [Header("Swinging")]
     public float swing_reach_distance = 25f;
@@ -54,12 +60,13 @@ public class ThirdPersonController : MonoBehaviour
     };
     private State state = State.AIR;
 
-
     void Start()
     {
         cameraTransform = Camera.main.transform;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
+        jump_hold_buffer_timer = 0.0f;
+        jump_buffer_timer = 0.0f;
     }
 
     void Update()
@@ -78,11 +85,22 @@ public class ThirdPersonController : MonoBehaviour
         _moveInput = new Vector3(horizontal, 0, vertical).normalized;
 
         LastOnGroundTime -= Time.deltaTime;
+        if (Input.GetKeyDown(jumpKey))
+        {
+            jump_buffer_timer = jump_buffer;
+        }
         if (GetComponent<GravityObject>().IsOnGround())
         {
             LastOnGroundTime = 0.1f;
             state = Input.GetKeyDown(sprintKey) ? State.RUN : State.WALK;
-            if (Input.GetKeyDown(jumpKey)) { StartJump(); }
+            if (Input.GetKeyDown(jumpKey)) 
+            {
+                StartJump();
+            }
+            else if(jump_buffer_timer > 0)
+            {
+                StartJump();
+            }
         }
         else if (state != State.SWING)
         {
@@ -93,19 +111,22 @@ public class ThirdPersonController : MonoBehaviour
         if (Input.GetKeyUp(swingKey)) { EndSwing(); }
         if (Input.GetKeyUp(jumpKey)) { EndJump(); }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && canDash)
+        jump_hold_buffer_timer -= Time.deltaTime;
+        jump_buffer_timer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && can_Dash)
         {
             Dash();
-            canDash = false;
-            dashTimer = dashCooldown;
+            can_Dash = false;
+            dash_Timer = dash_Cooldown;
         }
 
-        if (!canDash)
+        if (!can_Dash)
         {
-            dashTimer -= Time.deltaTime;
-            if (dashTimer <= 0.0f)
+            dash_Timer -= Time.deltaTime;
+            if (dash_Timer <= 0.0f)
             {
-                canDash = true;
+                can_Dash = true;
             }
         }
     }
@@ -241,13 +262,23 @@ public class ThirdPersonController : MonoBehaviour
     {
         //_is_jumping = true;
         GetComponent<Rigidbody>().AddForce(transform.up * jump_impulse_force, ForceMode.Impulse);
-        GetComponent<GravityObject>().gravity_mult = 1.0f;
+        jump_hold_buffer_timer = jump_hold_buffer;
+        jump_buffer_timer = 0;
+
     }
 
     void EndJump()
     {
         //_is_jumping = false;
-        GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
+        //GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
+        jump_buffer_timer = 0;
+        Vector3 velocity = GetComponent<Rigidbody>().velocity;
+        Vector3 up = Vector3.Project(velocity, transform.up);
+        Vector3 forward = Vector3.Project(velocity, transform.forward);
+        Vector3 right = Vector3.Project(velocity, transform.right);
+        float mult = (Vector3.Dot(up,transform.up) > 0 && jump_hold_buffer_timer > 0)? 0.5f : 1;
+
+        GetComponent<Rigidbody>().velocity = up * mult + forward + right;
     }
 
     void Dash()
