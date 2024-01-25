@@ -27,6 +27,9 @@ public class ThirdPersonController : MonoBehaviour
     public float gravity_mult_on_jump_release = 3.0f;
     public bool conserve_momentum = true;
     public float dash_force;
+    private bool canDash = true;
+    private float dashCooldown = 0.75f;
+    private float dashTimer = 0.0f;
     public float LastOnGroundTime { get; private set; }
 
     [Header("Swinging")]
@@ -69,10 +72,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             UIManager.ChangeHealth(1);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            Dash();
-        }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -93,6 +92,22 @@ public class ThirdPersonController : MonoBehaviour
         if (Input.GetKeyDown(swingKey)) { StartSwing(); }
         if (Input.GetKeyUp(swingKey)) { EndSwing(); }
         if (Input.GetKeyUp(jumpKey)) { EndJump(); }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && canDash)
+        {
+            Dash();
+            canDash = false;
+            dashTimer = dashCooldown;
+        }
+
+        if (!canDash)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0.0f)
+            {
+                canDash = true;
+            }
+        }
     }
 
     void FixedUpdate()
