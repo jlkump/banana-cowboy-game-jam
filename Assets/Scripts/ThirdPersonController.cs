@@ -57,8 +57,6 @@ public class ThirdPersonController : MonoBehaviour
 
 
     [Header("Swinging")]
-    //public float swing_reach_distance = 25f;
-    //public float swing_detection_distance = 50f;
     private Vector3 swing_point;
     private SpringJoint swing_joint;
     private Vector3 current_rope_end_pos;
@@ -129,6 +127,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             jump_buffer_timer = jump_buffer;
         }
+
         if (GetComponent<GravityObject>().IsOnGround())
         {
             LastOnGroundTime = 0.1f;
@@ -245,8 +244,7 @@ public class ThirdPersonController : MonoBehaviour
         float targetSpeed = targetVelocity.magnitude;
         if (targetSpeed > 0 && modelTransform != null)
         {
-            modelTransform.rotation = Quaternion.LookRotation(_moveInput, transform.up);
-            //temp.rotation = Quaternion.LookRotation(_moveInput, transform.up);
+            modelTransform.rotation = Quaternion.Slerp(modelTransform.rotation, Quaternion.LookRotation(_moveInput, transform.up), Time.deltaTime * 8);
         }
 
         float accelRate;
@@ -257,19 +255,6 @@ public class ThirdPersonController : MonoBehaviour
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accel_rate : decel_rate;
         else
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accel_rate * accel_in_air_rate : decel_rate * decel_in_air_rate;
-
-
-        //Not used since no jump implemented here, but may be useful if you plan to implement your own
-        /* 
-		#region Add Bonus Jump Apex Acceleration
-		//Increase are acceleration and maxSpeed when at the apex of their jump, makes the jump feel a bit more bouncy, responsive and natural
-		if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.velocity.y) < Data.jumpHangTimeThreshold)
-		{
-			accelRate *= Data.jumpHangAccelerationMult;
-			targetSpeed *= Data.jumpHangMaxSpeedMult;
-		}
-		#endregion
-		*/
 
 
         //We won't slow the player down if they are moving in their desired direction but at a greater speed than their maxSpeed
@@ -285,10 +270,8 @@ public class ThirdPersonController : MonoBehaviour
 
         //Calculate difference between current velocity and desired velocity
         Vector3 speed_diff = targetVelocity - GetTangentVelocity();
-
         Vector3 movement = speed_diff * accelRate;
-
-        
+        print("Adding a force of " +  movement);
         GetComponent<Rigidbody>().AddForce(movement);
     }
 
@@ -480,6 +463,7 @@ public class ThirdPersonController : MonoBehaviour
     void StartJump()
     {
         //_is_jumping = true;
+        GetComponent<GravityObject>().gravity_mult = 1.0f;
         GetComponent<Rigidbody>().AddForce(transform.up * jump_impulse_force, ForceMode.Impulse);
         jump_hold_buffer_timer = jump_hold_buffer;
         jump_buffer_timer = 0;
@@ -489,15 +473,11 @@ public class ThirdPersonController : MonoBehaviour
     void EndJump()
     {
         //_is_jumping = false;
-        //GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
         jump_buffer_timer = 0;
         Vector3 velocity = GetComponent<Rigidbody>().velocity;
         Vector3 up = Vector3.Project(velocity, transform.up);
-        Vector3 forward = Vector3.Project(velocity, transform.forward);
-        Vector3 right = Vector3.Project(velocity, transform.right);
-        float mult = (Vector3.Dot(up,transform.up) > 0 && jump_hold_buffer_timer > 0)? 0.5f : 1;
-
-        GetComponent<Rigidbody>().velocity = up * mult + forward + right;
+        float mult = (Vector3.Dot(up, transform.up) > 0 && jump_hold_buffer_timer > 0) ? 0.5f : 1;
+        GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
     }
 
     void Dash()

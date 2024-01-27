@@ -8,13 +8,14 @@ public class GravityObject : MonoBehaviour
     List<GravityAttractor> attractors;
     bool on_ground = false;
 
-    public float max_fall_speed { get; set; } = 40.0f;
-    public float gravity_mult { get; set; } = 1.5f;
+    public float max_fall_speed { get; set; } = 30.0f;
+    public float gravity_mult { get; set; } = 1.0f;
 
     void Awake()
     {
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        attractors = new List<GravityAttractor>();
     }
 
     void FixedUpdate()
@@ -23,7 +24,11 @@ public class GravityObject : MonoBehaviour
         if (highest_prio_ind != -1)
         {
             GravityAttractor attractor = attractors[highest_prio_ind];
-            attractor.Attract(transform, max_fall_speed, gravity_mult);
+            attractor.Reorient(transform);
+            if (!on_ground)
+            {
+                attractor.Attract(transform, max_fall_speed, gravity_mult);
+            }
         }
     }
 
@@ -47,6 +52,7 @@ public class GravityObject : MonoBehaviour
     {
         if (collision != null && collision.gameObject != null && collision.gameObject.GetComponent<GravityAttractor>() != null)
         {
+            //print("Entered orbit");
             attractors.Add(collision.gameObject.GetComponent<GravityAttractor>());
         }
     }
@@ -55,22 +61,25 @@ public class GravityObject : MonoBehaviour
     {
         if (collision != null && collision.gameObject != null && collision.gameObject.GetComponent<GravityAttractor>() != null)
         {
+            //print("Exited orbit");
             attractors.Remove(collision.gameObject.GetComponent<GravityAttractor>());
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision != null && collision.gameObject != null && collision.gameObject.tag == "ground")
+        if (collision != null && collision.gameObject != null && collision.gameObject.tag == "Ground")
         {
+            //print("On planet surface");
             on_ground = true;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision != null && collision.gameObject != null && collision.gameObject.tag == "ground")
+        if (collision != null && collision.gameObject != null && collision.gameObject.tag == "Ground")
         {
+            //print("Left planet surface");
             on_ground = false;
         }
     }

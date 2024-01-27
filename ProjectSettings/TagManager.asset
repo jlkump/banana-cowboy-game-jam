@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Planet
   - Lasso Object
+  - Ground
   layers:
   - Default
   - TransparentFX
