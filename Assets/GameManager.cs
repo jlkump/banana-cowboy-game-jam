@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
     // serialized fields
     [SerializeField] Vector3 defRespawnCoords;
     [SerializeField] ThirdPersonController player;
-    
+
     public GameObject pauseMenu;
+    public bool paused;
     private Vector3 respawnCoords = Vector3.zero;
 
     private void Start()
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1.0f;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 UnityEngine.Cursor.visible = false;
+                paused = false;
             }
             else
             {
@@ -36,17 +38,20 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 UnityEngine.Cursor.visible = true;
+                paused = true;
             }
         }
     }
 
     // resetScene with the players most recent respawn coordinates
-    public void resetSceneWithRespawnCoords() {
+    public void resetSceneWithRespawnCoords()
+    {
         // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         player.transform.position = respawnCoords;
     }
 
-    public void setRespawn(Vector3 coords) {
+    public void setRespawn(Vector3 coords)
+    {
         respawnCoords = coords;
     }
 
@@ -70,3 +75,4 @@ public class GameManager : MonoBehaviour
         }
     }
 }
+

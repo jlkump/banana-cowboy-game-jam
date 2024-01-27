@@ -1492,7 +1492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382094975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.059016053, y: 0.00000001731006, z: -0.0000000010233551, w: 0.99825704}
+  m_LocalRotation: {x: 0.059016056, y: -0.000000017310056, z: 0.000000001023355, w: 0.99825704}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3535,6 +3535,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -10
+  priority: 0
+  attract_direction: 0
+  center_of_gravity: {fileID: 0}
 --- !u!135 &944578341
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5050,7 +5053,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284457045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17067231, y: -0.000000016953926, z: 0.0000000029366534, w: 0.98532784}
+  m_LocalRotation: {x: 0.17067231, y: 0.000000016953926, z: -0.0000000029366534, w: 0.98532784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5174,7 +5177,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ae0ff4beb77f14286f7502e1357f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  starDustAmount: 0
   starDustUI: {fileID: 1817070754}
+  health: 0
   bananaIcon: {fileID: 272468144}
   bananaIcons:
   - {fileID: 21300000, guid: 83aba69b6de591f4eaa6bbc1cc37c7ba, type: 3}
@@ -5634,6 +5640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4472e0c2f2d56049a932e910cd9b98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ground_mask:
+    serializedVersion: 2
+    m_Bits: 0
+  ground_detection_height: 10
 --- !u!54 &1375658745
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5691,6 +5701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0304aada65ef26a419ed64dd5cfffe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui: {fileID: 0}
   player_root: {fileID: 1375658746}
   modelTransform: {fileID: 584486537}
   lr: {fileID: 1375658748}
@@ -5709,7 +5720,7 @@ MonoBehaviour:
   jump_buffer: 1
   lasso_reach_distance: 25
   lasso_dectection_distance: 50
-  lasso_indicator: {fileID: 5877217809096224418, guid: 0b3ab37528b7aec499040084a79bc17a, type: 3}
+  lasso_scope_indicator: {fileID: 0}
   max_number_of_indicators: 10
   targeted_color: {r: 0, g: 1, b: 0, a: 1}
   out_of_range_color: {r: 1, g: 0, b: 0, a: 1}
@@ -5717,6 +5728,10 @@ MonoBehaviour:
   lassoKey: 323
   jumpKey: 32
   sprintKey: 304
+  soundManager: {fileID: 0}
+  walkSFX: {fileID: 0}
+  runSFX: {fileID: 0}
+  jumpSFX: {fileID: 0}
 --- !u!120 &1375658748
 LineRenderer:
   serializedVersion: 2
