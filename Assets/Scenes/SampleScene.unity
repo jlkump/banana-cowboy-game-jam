@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1758,6 +1758,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7003146359924937596, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
   m_PrefabInstance: {fileID: 5752539768079880858}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1408910319
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1984293319537728691, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3886278444058206026, guid: 1d669642532735a429838e92b53e69ef, type: 3}
+      propertyPath: m_Name
+      value: Sound Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1d669642532735a429838e92b53e69ef, type: 3}
 --- !u!1 &1433138497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2660,6 +2717,18 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
+      propertyPath: runSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 5ee2202c8995dfb49b2ccf7a0bbdbff4, type: 3}
+    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
+      propertyPath: jumpSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 7fc00789aea3c7745b187349df625f86, type: 3}
+    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
+      propertyPath: walkSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 0bec0ae16694eb441b3809b7e0950103, type: 3}
+    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
       propertyPath: lasso_indicator
       value: 
       objectReference: {fileID: 0}
@@ -2891,5 +2960,4 @@ SceneRoots:
   - {fileID: 6508794706659168768}
   - {fileID: 1872000807}
   - {fileID: 9026594352285819751}
-  - {fileID: 1490745313}
-  - {fileID: 2080131467}
+  - {fileID: 1408910319}
