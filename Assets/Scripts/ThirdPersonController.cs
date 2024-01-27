@@ -68,6 +68,8 @@ public class ThirdPersonController : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    [SerializeField] public GameManager gameManager;
+
     private Vector3 _moveInput;
 
     [Header("Sound Effects")]
@@ -75,6 +77,7 @@ public class ThirdPersonController : MonoBehaviour
     public AudioClip walkSFX;
     public AudioClip runSFX;
     public AudioClip jumpSFX;
+    public AudioClip dashSFX;
 
     enum LassoState
     {
@@ -153,7 +156,8 @@ public class ThirdPersonController : MonoBehaviour
             }
             else if (_moveInput == Vector3.zero && soundManager.soundEffectObject.isPlaying)
             {
-                soundManager.StopSFX();
+                // This will cause problems if there's other sound effects.
+                //soundManager.StopSFX();
             }
             if (Input.GetKeyDown(jumpKey))
             {
@@ -169,7 +173,7 @@ public class ThirdPersonController : MonoBehaviour
             player_state = State.AIR;
         }
 
-        if (Input.GetKeyDown(lassoKey))
+        if (Input.GetKeyDown(lassoKey) && !gameManager.paused)
         {
             switch (lasso_state)
             {
@@ -497,6 +501,9 @@ public class ThirdPersonController : MonoBehaviour
     void Dash()
     {
         //GetComponent<Rigidbody>().AddForce(temp.transform.forward * dash_force, ForceMode.Impulse);
+        soundManager.PlaySFX(dashSFX, 1);
         GetComponent<Rigidbody>().AddForce(modelTransform.forward * dash_force, ForceMode.Impulse);
     }
 }
+
+
