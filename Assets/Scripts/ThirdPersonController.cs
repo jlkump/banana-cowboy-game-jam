@@ -361,6 +361,15 @@ public class ThirdPersonController : MonoBehaviour
                         // The lasso object is within range, place a grey indicator if not the closest target
                         current_indicator.GetComponent<Renderer>().material.SetColor("_Color", in_range_color);
                     }
+
+                    if (closest_target_hit == null)
+                    {
+                        lasso_target = null;
+                    }
+                    else
+                    {
+                        lasso_target = closest_target_hit.gameObject;
+                    }
                 }
 
                 if (Vector3.Distance(indicator_positions[i], transform.position) > lasso_reach_distance)
@@ -369,15 +378,6 @@ public class ThirdPersonController : MonoBehaviour
                     current_indicator.GetComponent<Renderer>().material.SetColor("_Color", out_of_range_color);
                 }
             }
-        }
-
-        if (closest_target_hit == null)
-        {
-            lasso_target = null;
-        } 
-        else
-        {
-            lasso_target = closest_target_hit.gameObject;
         }
     }
 
@@ -397,6 +397,10 @@ public class ThirdPersonController : MonoBehaviour
             {
                 StartSwing(lasso_target.transform.position);
             }
+        }
+        else
+        {
+            lasso_state = LassoState.NONE;
         }
 
         // Disable all indicators
