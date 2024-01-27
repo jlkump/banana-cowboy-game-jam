@@ -43,6 +43,7 @@ public class LassoableEnemy : MonoBehaviour
     public void SetLassoActor(Transform lasso_actor)
     {
         lasso_actor_position = lasso_actor;
+        Destroy(GetComponent<OrangeEnemy>());
     }
 
     public void ThrowEnemyInDirection(Vector3 dir, float force)

@@ -14,13 +14,13 @@ public class HurtyZone : MonoBehaviour
     [field: SerializeField] public bool kill { get; private set; }
     private void OnTriggerEnter(Collider other) {
         // check if the collided entity is the player
-        if (kill)
+        if (other.CompareTag("Player"))
         {
-            // damage the player
-            UI.ChangeHealth(-3);
-        } else {
-            if (other.CompareTag("Player"))
+            if (kill)
             {
+                // damage the player
+                UI.ChangeHealth(-3);
+            } else {
                 // damage the player
                 UI.ChangeHealth(-1);
             }
