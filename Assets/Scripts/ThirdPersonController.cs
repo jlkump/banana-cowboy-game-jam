@@ -179,6 +179,9 @@ public class ThirdPersonController : MonoBehaviour
                     break;
                 case LassoState.WOUND_UP:
                 case LassoState.SWING:
+                    print("lasso end swing");
+                    EndSwing();
+                    break;
                 case LassoState.ENEMY:
                 default:
                     // Shouldn't be possible
@@ -197,14 +200,12 @@ public class ThirdPersonController : MonoBehaviour
                     print("lasso windup release");
                     EndLassoWindup();
                     break;
-                case LassoState.SWING:
-                    print("lasso end swing");
-                    EndSwing();
-                    break;
                 case LassoState.ENEMY:
                     print("Lasso release of enemy");
                     break;
+                case LassoState.SWING:
                 case LassoState.NONE:
+                    break;
                 default:
                     // Shouldn't be possible
                     print("Click release on invalid lasso state");
@@ -317,7 +318,7 @@ public class ThirdPersonController : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             Collider collider = colliders[i];
-            if (collider.tag == "Lasso Object")
+            if (collider.gameObject.GetComponent<LassoableEnemy>() != null || collider.gameObject.GetComponent<Swingable>() != null)
             {
                 // Note location of object for the indicators
 
