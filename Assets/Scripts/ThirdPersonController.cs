@@ -155,6 +155,9 @@ public class ThirdPersonController : MonoBehaviour
                     break;
                 case LassoState.WOUND_UP:
                 case LassoState.SWING:
+                    print("lasso end swing");
+                    EndSwing();
+                    break;
                 case LassoState.ENEMY:
                 default:
                     // Shouldn't be possible
@@ -172,14 +175,12 @@ public class ThirdPersonController : MonoBehaviour
                     print("lasso windup release");
                     EndLassoWindup();
                     break;
-                case LassoState.SWING:
-                    print("lasso end swing");
-                    EndSwing();
-                    break;
                 case LassoState.ENEMY:
                     print("Lasso release of enemy");
                     break;
+                case LassoState.SWING:
                 case LassoState.NONE:
+                    break;
                 default:
                     // Shouldn't be possible
                     print("Click release on invalid lasso state");
