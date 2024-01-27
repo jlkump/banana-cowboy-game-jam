@@ -19,6 +19,12 @@ public class SoundManager : MonoBehaviour
     {
         soundEffectObject.clip = effect;
         soundEffectObject.volume = volume;
+        soundEffectObject.pitch = 1;
+        // Add variety to constant sounds
+        if (effect.name.Contains("Walk") || effect.name.Contains("Run"))
+        {
+            soundEffectObject.pitch = Random.Range(1f, 1.5f);
+        }
         soundEffectObject.Play();
     }
 
