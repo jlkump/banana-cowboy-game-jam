@@ -73,8 +73,9 @@ public class GravityObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision != null && collision.gameObject != null && 
-            (ground_mask & 1 << collision.gameObject.layer) > 0 && // Checking layer masks sucks -_-
-            Vector3.Dot((transform.position - collision.gameObject.transform.position), transform.up) > 0)
+            (ground_mask & 1 << collision.gameObject.layer) > 0) // Checking layer masks sucks -_-
+            // Vector3.Dot((transform.position - collision.gameObject.transform.position, transform.up) > -0.3)
+            // The above is used to check if the player is above the ground, but tends to be buggy since the player's up doesn't immediately change
         {
             print("On surface");
             on_ground = true;
@@ -84,8 +85,9 @@ public class GravityObject : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (collision != null &&
-            (ground_mask & 1 << collision.gameObject.layer) > 0 &&
-            Vector3.Dot((transform.position - collision.gameObject.transform.position), transform.up) > 0)
+            (ground_mask & 1 << collision.gameObject.layer) > 0)
+            // Vector3.Dot((transform.position - collision.gameObject.transform.position, transform.up) > -0.3)
+            // Same stuff
         {
             print("Left surface");
             on_ground = false;

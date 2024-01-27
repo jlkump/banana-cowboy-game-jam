@@ -6,7 +6,7 @@ using UnityEngine;
 public class GravityAttractor : MonoBehaviour
 {
 
-    public float gravity = -30.0f;
+    public float gravity = -20.0f;
     public int priority = 0; // Higher priority overrides lower priority
     public enum AttractDirection
     {
@@ -54,7 +54,7 @@ public class GravityAttractor : MonoBehaviour
     {
         Vector3 targetDir = GetGravityUp(body);
         Vector3 bodyUp = body.up;
-        body.rotation = Quaternion.Slerp(body.rotation, Quaternion.FromToRotation(bodyUp, targetDir) * body.rotation, Time.deltaTime * 8.0f);
+        body.rotation = Quaternion.Slerp(body.rotation, Quaternion.FromToRotation(bodyUp, targetDir) * body.rotation, Time.deltaTime * 6.0f);
     }
 
     Vector3 GetGravityUp(Transform body)
