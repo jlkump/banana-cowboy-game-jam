@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Device;
+using UnityEngine.UI;
 
 public class ThirdPersonController : MonoBehaviour
 {
@@ -67,6 +70,7 @@ public class ThirdPersonController : MonoBehaviour
 
     private Vector3 _moveInput;
 
+    public GameObject scopeImage;
     enum LassoState
     {
         NONE,
@@ -99,6 +103,8 @@ public class ThirdPersonController : MonoBehaviour
             indicator.SetActive(false); // Should make invisible, we shall see
             indicators.Add(indicator);
         }
+        scopeImage = Instantiate(scopeImage, transform.position, Quaternion.identity, GameObject.Find("Player UI").transform);
+        scopeImage.SetActive(false);
         lasso_target = null;
     }
 
@@ -289,6 +295,7 @@ public class ThirdPersonController : MonoBehaviour
     void StartLassoWindup()
     {
         lasso_state = LassoState.WOUND_UP;
+        scopeImage.SetActive(true);
     }
 
     void LassoWindup()
@@ -355,6 +362,7 @@ public class ThirdPersonController : MonoBehaviour
                     {
                         // The lasso object is within range and the closest target, show a green indicator
                         current_indicator.GetComponent<Renderer>().material.SetColor("_Color", targeted_color);
+                        SpawnSpriteInScreenSpace(indicator_positions[i]);
                     }
                     else
                     {
@@ -379,6 +387,16 @@ public class ThirdPersonController : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SpawnSpriteInScreenSpace(Vector3 screen)
+    {
+        scopeImage.transform.position = Camera.main.WorldToScreenPoint(screen);
+        /*RectTransform canvas = GameObject.Find("Player UI").GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(((screen.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f)),
+        ((screen.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f)));
+        print(canvas.sizeDelta.x +","+ canvas.sizeDelta.y+" "+ screen.x+", "+screen.y);
+        Instantiate(scopeImage, temp, Quaternion.identity, GameObject.Find("Player UI").transform);*/
     }
 
     void EndLassoWindup()
@@ -408,6 +426,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             indicators[i].SetActive(false);
         }
+        scopeImage.SetActive(false);
     }
 
     void StartSwing(Vector3 swing_position)
