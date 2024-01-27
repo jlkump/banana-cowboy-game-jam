@@ -11,11 +11,12 @@ public class ThirdPersonController : MonoBehaviour
 {
     Transform cameraTransform;
     [Header("References")]
-    [SerializeField] public UIManager ui;
+    public UIManager ui;
     public Transform player_root;
     public Transform modelTransform;
     public LineRenderer lr;
     public Transform lasso_throw_pos;
+    public Animator player_animation;
     //public LayerMask swingable;
 
     //public Transform temp;
@@ -82,6 +83,7 @@ public class ThirdPersonController : MonoBehaviour
     public AudioClip runSFX;
     public AudioClip jumpSFX;
     public AudioClip dashSFX;
+    public AudioClip ropeThrowSFX;
 
     enum LassoState
     {
@@ -121,6 +123,7 @@ public class ThirdPersonController : MonoBehaviour
         lasso_rope_wrap_positions = new List<Vector3>();
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+        ui = GameObject.Find("Player UI").GetComponent<UIManager>();
     }
 
     void Update()
@@ -155,16 +158,21 @@ public class ThirdPersonController : MonoBehaviour
                 if (State.WALK == player_state)
                 {
                     soundManager.PlaySFX(walkSFX, 1);
+                    player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
+                    player_animation.Play("BananaCowboyRun");
                 }
                 else if (State.RUN == player_state)
                 {
                     soundManager.PlaySFX(runSFX, 1);
+                    player_animation.speed = 2.0f; // CHANGE LATER: only because there's only one run/walk animation
+                    player_animation.Play("BananaCowboyRun");
                 }
             }
-            else if (_moveInput == Vector3.zero && soundManager.soundEffectObject.isPlaying)
+            else if (_moveInput == Vector3.zero)
             {
-                // This will cause problems if there's other sound effects.
-                //soundManager.StopSFX();
+                // This will cause problems if there's other sound effects.s
+                player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
+                player_animation.Play("BananaCowboyIdle");
             }
             if (Input.GetKeyDown(jumpKey))
             {
@@ -180,13 +188,15 @@ public class ThirdPersonController : MonoBehaviour
             player_state = State.AIR;
         }
 
-        if (Input.GetKeyDown(lassoKey) && !gameManager.paused)
+        if (Input.GetKeyDown(lassoKey) && !gameManager.pauseMenu.activeSelf)
         {
             switch (lasso_state)
             {
                 case LassoState.NONE:
                     print("lassoing windup!");
                     StartLassoWindup();
+                    player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
+                    player_animation.Play("BananaCowboyLassoWindUp");
                     break;
                 case LassoState.WOUND_UP:
                 case LassoState.SWING:
@@ -437,6 +447,7 @@ public class ThirdPersonController : MonoBehaviour
             else if (lasso_target.GetComponent<Swingable>() != null)
             {
                 StartSwing(lasso_target.transform.position);
+                soundManager.PlaySFX(ropeThrowSFX, 1);
             }
         }
         else
