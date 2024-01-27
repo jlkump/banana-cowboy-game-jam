@@ -70,6 +70,12 @@ public class ThirdPersonController : MonoBehaviour
 
     private Vector3 _moveInput;
 
+    [Header("Sound Effects")]
+    public SoundManager soundManager;
+    public AudioClip walkSFX;
+    public AudioClip runSFX;
+    public AudioClip jumpSFX;
+
     enum LassoState
     {
         NONE,
@@ -103,6 +109,8 @@ public class ThirdPersonController : MonoBehaviour
             indicators.Add(indicator);
         }
         lasso_target = null;
+
+        soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
     }
 
     void Update()
@@ -130,24 +138,40 @@ public class ThirdPersonController : MonoBehaviour
         if (GetComponent<GravityObject>().IsOnGround())
         {
             LastOnGroundTime = 0.1f;
-            player_state = Input.GetKeyDown(sprintKey) ? State.RUN : State.WALK;
-            if (Input.GetKeyDown(jumpKey)) 
+            player_state = Input.GetKey(sprintKey) ? State.RUN : State.WALK;
+
+            if (_moveInput != Vector3.zero && !soundManager.soundEffectObject.isPlaying)
+            {
+                if (State.WALK == player_state)
+                {
+                    soundManager.PlaySFX(walkSFX, 1);
+                }
+                else if (State.RUN == player_state)
+                {
+                    soundManager.PlaySFX(runSFX, 1);
+                }
+            }
+            else if (_moveInput == Vector3.zero && soundManager.soundEffectObject.isPlaying)
+            {
+                soundManager.StopSFX();
+            }
+            if (Input.GetKeyDown(jumpKey))
             {
                 StartJump();
             }
-            else if(jump_buffer_timer > 0)
+            else if (jump_buffer_timer > 0)
             {
                 StartJump();
             }
         }
-        else
+        else if (LastOnGroundTime <= 0)
         {
             player_state = State.AIR;
         }
 
         if (Input.GetKeyDown(lassoKey))
         {
-            switch(lasso_state)
+            switch (lasso_state)
             {
                 case LassoState.NONE:
                     print("lassoing windup!");
@@ -160,10 +184,11 @@ public class ThirdPersonController : MonoBehaviour
                     // Shouldn't be possible
                     print("Click down on invalid lasso state");
                     break;
-                }
+            }
         }
 
-        if (Input.GetKeyUp(lassoKey)) { 
+        if (Input.GetKeyUp(lassoKey))
+        {
 
             switch (lasso_state)
             {
@@ -184,7 +209,7 @@ public class ThirdPersonController : MonoBehaviour
                     // Shouldn't be possible
                     print("Click release on invalid lasso state");
                     break;
-                }
+            }
         }
 
         if (lasso_state == LassoState.WOUND_UP)
@@ -257,9 +282,9 @@ public class ThirdPersonController : MonoBehaviour
 
 
         //We won't slow the player down if they are moving in their desired direction but at a greater speed than their maxSpeed
-        if (conserve_momentum && 
-            Mathf.Abs(GetTangentVelocity().magnitude) > Mathf.Abs(targetSpeed) && 
-            Vector3.Dot(targetVelocity, GetComponent<Rigidbody>().GetPointVelocity(Vector3.zero)) > 0 && 
+        if (conserve_momentum &&
+            Mathf.Abs(GetTangentVelocity().magnitude) > Mathf.Abs(targetSpeed) &&
+            Vector3.Dot(targetVelocity, GetComponent<Rigidbody>().GetPointVelocity(Vector3.zero)) > 0 &&
             Mathf.Abs(targetSpeed) > 0.01f && LastOnGroundTime < 0)
         {
             //Prevent any deceleration from happening, or in other words conserve are current momentum
@@ -295,7 +320,7 @@ public class ThirdPersonController : MonoBehaviour
             if (collider.tag == "Lasso Object")
             {
                 // Note location of object for the indicators
-                
+
                 Vector3 viewport_point = Camera.main.WorldToViewportPoint(collider.transform.position);
                 // Check if we are in the viewport, if we are, then add the collider positions for indicators.
                 // Also mark the closest hit
@@ -421,7 +446,7 @@ public class ThirdPersonController : MonoBehaviour
 
         lr.positionCount = 2;
     }
-    
+
     void EndSwing()
     {
         lasso_state = LassoState.NONE; // Will be corrected on next update if wrong
@@ -450,6 +475,7 @@ public class ThirdPersonController : MonoBehaviour
     void StartJump()
     {
         //_is_jumping = true;
+        soundManager.PlaySFX(jumpSFX, 1);
         GetComponent<GravityObject>().gravity_mult = 1.0f;
         GetComponent<Rigidbody>().AddForce(transform.up * jump_impulse_force, ForceMode.Impulse);
         jump_hold_buffer_timer = jump_hold_buffer;
