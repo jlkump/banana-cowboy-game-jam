@@ -45,7 +45,8 @@ public class ThirdPersonController : MonoBehaviour
     [Header("Lasso")]
     public float lasso_reach_distance = 25f;
     public float lasso_dectection_distance = 50f;
-    public GameObject lasso_indicator;
+    public GameObject lasso_scope_indicator;
+    //public Material lasso_scope_mat;
     public int max_number_of_indicators = 10;
 
     public Color targeted_color = Color.green;
@@ -68,7 +69,6 @@ public class ThirdPersonController : MonoBehaviour
 
     private Vector3 _moveInput;
 
-    public GameObject scopeImage;
     enum LassoState
     {
         NONE,
@@ -97,12 +97,10 @@ public class ThirdPersonController : MonoBehaviour
         indicators = new List<GameObject>(max_number_of_indicators);
         for (int i = 0; i < max_number_of_indicators; i++)
         {
-            GameObject indicator = Instantiate(lasso_indicator, transform.position, Quaternion.identity);
+            GameObject indicator = Instantiate(lasso_scope_indicator, transform.position, Quaternion.identity, GameObject.Find("Player UI").transform);
             indicator.SetActive(false); // Should make invisible, we shall see
             indicators.Add(indicator);
         }
-        scopeImage = Instantiate(scopeImage, transform.position, Quaternion.identity, GameObject.Find("Player UI").transform);
-        scopeImage.SetActive(false);
         lasso_target = null;
     }
 
@@ -271,14 +269,13 @@ public class ThirdPersonController : MonoBehaviour
         //Calculate difference between current velocity and desired velocity
         Vector3 speed_diff = targetVelocity - GetTangentVelocity();
         Vector3 movement = speed_diff * accelRate;
-        print("Adding a force of " +  movement);
+        //print("Adding a force of " +  movement);
         GetComponent<Rigidbody>().AddForce(movement);
     }
 
     void StartLassoWindup()
     {
         lasso_state = LassoState.WOUND_UP;
-        scopeImage.SetActive(true);
     }
 
     void LassoWindup()
@@ -335,8 +332,8 @@ public class ThirdPersonController : MonoBehaviour
             {
                 GameObject current_indicator = indicators[indicator_index];
                 current_indicator.SetActive(true);
-                current_indicator.transform.position = indicator_positions[i];
-                current_indicator.GetComponent<Renderer>().enabled = true;
+                current_indicator.transform.position = Camera.main.WorldToScreenPoint(indicator_positions[i]);
+                //current_indicator.GetComponent<Image>().enabled = true;
                 indicator_index++;
                 // The indicator is in view, so place an indicator object on it
                 if (Vector3.Distance(indicator_positions[i], transform.position) < lasso_reach_distance)
@@ -344,13 +341,12 @@ public class ThirdPersonController : MonoBehaviour
                     if (viewport_point == closest_point)
                     {
                         // The lasso object is within range and the closest target, show a green indicator
-                        current_indicator.GetComponent<Renderer>().material.SetColor("_Color", targeted_color);
-                        SpawnSpriteInScreenSpace(indicator_positions[i]);
+                        current_indicator.GetComponent<Image>().color = targeted_color;
                     }
                     else
                     {
                         // The lasso object is within range, place a grey indicator if not the closest target
-                        current_indicator.GetComponent<Renderer>().material.SetColor("_Color", in_range_color);
+                        current_indicator.GetComponent<Image>().color = in_range_color;
                     }
 
                     if (closest_target_hit == null)
@@ -366,20 +362,11 @@ public class ThirdPersonController : MonoBehaviour
                 if (Vector3.Distance(indicator_positions[i], transform.position) > lasso_reach_distance)
                 {
                     // The lasso object is outside range, place a red indicator
-                    current_indicator.GetComponent<Renderer>().material.SetColor("_Color", out_of_range_color);
+                    current_indicator.GetComponent<Image>().color = out_of_range_color;
+                    lasso_target = null;
                 }
             }
         }
-    }
-
-    void SpawnSpriteInScreenSpace(Vector3 screen)
-    {
-        scopeImage.transform.position = Camera.main.WorldToScreenPoint(screen);
-        /*RectTransform canvas = GameObject.Find("Player UI").GetComponent<RectTransform>();
-        Vector2 temp = new Vector2(((screen.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f)),
-        ((screen.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f)));
-        print(canvas.sizeDelta.x +","+ canvas.sizeDelta.y+" "+ screen.x+", "+screen.y);
-        Instantiate(scopeImage, temp, Quaternion.identity, GameObject.Find("Player UI").transform);*/
     }
 
     void EndLassoWindup()
@@ -409,7 +396,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             indicators[i].SetActive(false);
         }
-        scopeImage.SetActive(false);
     }
 
     void StartSwing(Vector3 swing_position)
@@ -474,9 +460,9 @@ public class ThirdPersonController : MonoBehaviour
     {
         //_is_jumping = false;
         jump_buffer_timer = 0;
-        Vector3 velocity = GetComponent<Rigidbody>().velocity;
-        Vector3 up = Vector3.Project(velocity, transform.up);
-        float mult = (Vector3.Dot(up, transform.up) > 0 && jump_hold_buffer_timer > 0) ? 0.5f : 1;
+        //Vector3 velocity = GetComponent<Rigidbody>().velocity;
+        //Vector3 up = Vector3.Project(velocity, transform.up);
+        //float mult = (Vector3.Dot(up, transform.up) > 0 && jump_hold_buffer_timer > 0) ? 0.5f : 1;
         GetComponent<GravityObject>().gravity_mult = gravity_mult_on_jump_release;
     }
 
