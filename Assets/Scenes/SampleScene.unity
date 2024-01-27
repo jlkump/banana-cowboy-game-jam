@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -549,7 +549,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1161972056}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 16}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -783,7 +783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382094975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.059016056, y: -0.00000001731006, z: 0.0000000010233552, w: 0.99825704}
+  m_LocalRotation: {x: 0.059016053, y: 0.000000017310056, z: -0.0000000010233548, w: 0.99825704}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -842,6 +842,10 @@ PrefabInstance:
     - target: {fileID: 9170611127359325323, guid: 77529e1ccde0e1c42b6c0de5c6f40fb9, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 9170611127359325323, guid: 77529e1ccde0e1c42b6c0de5c6f40fb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1471,7 +1475,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14767143, y: 0.00000003403548, z: -0.000000005081782, w: 0.9890365}
+  m_LocalRotation: {x: 0.14767143, y: -0.00000003403548, z: 0.000000005081782, w: 0.9890365}
   m_LocalPosition: {x: 0, y: 2.5, z: 17.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1583,7 +1587,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113231750}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1476714, y: 0.00000001701774, z: -0.0000000025408904, w: 0.9890365}
+  m_LocalRotation: {x: 0.1476714, y: -0.00000001701774, z: 0.0000000025408904, w: 0.9890365}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1789,7 +1793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284457045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17067231, y: 0.000000016953926, z: -0.0000000029366534, w: 0.98532784}
+  m_LocalRotation: {x: 0.17067231, y: -0.000000016953926, z: 0.0000000029366534, w: 0.98532784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1870,82 +1874,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d669642532735a429838e92b53e69ef, type: 3}
---- !u!1 &1433138497
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1433138498}
-  - component: {fileID: 1433138500}
-  - component: {fileID: 1433138499}
-  m_Layer: 5
-  m_Name: Star Dust Icon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1433138498
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433138497}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1817070753}
-  m_Father: {fileID: 1286246522}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -27.000092, y: 0}
-  m_SizeDelta: {x: 164.9481, y: 129.4704}
-  m_Pivot: {x: 0, y: 1}
---- !u!114 &1433138499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433138497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 43bf3a6468aab2a43a7e0530e48f9912, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1433138500
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433138497}
-  m_CullTransparentMesh: 1
 --- !u!114 &1462727135 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3311180938866408121, guid: 39c941b491fb2b149b89c74ab43d0d23, type: 3}
@@ -2633,6 +2561,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager GameObjects
       objectReference: {fileID: 0}
+    - target: {fileID: 1253253498751912244, guid: 39c941b491fb2b149b89c74ab43d0d23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3311180938866408121, guid: 39c941b491fb2b149b89c74ab43d0d23, type: 3}
       propertyPath: player
       value: 
@@ -2697,6 +2629,10 @@ PrefabInstance:
     - target: {fileID: 4744829356126105455, guid: 7047bc1108b5ac64d9064042ddafcc6f, type: 3}
       propertyPath: m_Name
       value: Star Dust
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744829356126105455, guid: 7047bc1108b5ac64d9064042ddafcc6f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9128765551500510320, guid: 7047bc1108b5ac64d9064042ddafcc6f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2764,57 +2700,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1462727135}
     - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: ropeThrowSFX
+      propertyPath: ropeWindUpSFX
       value: 
-      objectReference: {fileID: 8300000, guid: 2685db1f7e2d1ce47aba7235a671ad7f, type: 3}
-    - target: {fileID: 5614625175713907581, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: hurtSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 5617d3619a042864ea27e49d9e0a3462, type: 3}
+      objectReference: {fileID: 8300000, guid: 915bd94f6dcf7e74e844639d10b4afaf, type: 3}
     - target: {fileID: 5614625175713907581, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1462727135}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: lasso_indicator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: in_range_color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: targeted_color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: lasso_throw_force
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: jump_impulse_force
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: out_of_range_color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: lasso_scope_indicator
-      value: 
-      objectReference: {fileID: 5057118661661899772, guid: 4be135e70648e0b448099190bb14742d, type: 3}
-    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: gravity_mult_on_jump_release
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4822149453230830322, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: ground_mask.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4822149453230830322, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
-      propertyPath: ground_detection_height
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7003146359924937596, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2916,6 +2808,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hurty Zone
       objectReference: {fileID: 0}
+    - target: {fileID: 7636865753117545326, guid: 7e7b16a8a7d78ae48b71a96ca3aa7c07, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2936,6 +2832,10 @@ PrefabInstance:
     - target: {fileID: 5906729651569057166, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
       propertyPath: m_Name
       value: RespawnCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906729651569057166, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8082059715618253572, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3001,3 +2901,7 @@ SceneRoots:
   - {fileID: 2080131467}
   - {fileID: 540108708}
   - {fileID: 199261346755507963}
+  - {fileID: 164734022}
+  - {fileID: 272468145}
+  - {fileID: 1628364250}
+  - {fileID: 1408910319}

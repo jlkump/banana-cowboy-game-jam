@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -383,10 +383,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60ff8d1733c8a3f4bb77a25373459d5d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1295367581}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60ff8d1733c8a3f4bb77a25373459d5d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2129470994}
   m_SourcePrefab: {fileID: 100100000, guid: 60ff8d1733c8a3f4bb77a25373459d5d, type: 3}
 --- !u!4 &187757109 stripped
 Transform:
@@ -1304,7 +1300,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14767143, y: 0.00000003403548, z: -0.000000005081782, w: 0.9890365}
+  m_LocalRotation: {x: 0.14767143, y: -0.00000003403548, z: 0.000000005081782, w: 0.9890365}
   m_LocalPosition: {x: 0, y: 2.5, z: 17.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1416,7 +1412,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113231750}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1476714, y: 0.00000001701774, z: -0.0000000025408904, w: 0.9890365}
+  m_LocalRotation: {x: 0.1476714, y: -0.00000001701774, z: 0.0000000025408904, w: 0.9890365}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1691,7 +1687,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284457045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17067231, y: 0.000000016953926, z: -0.0000000029366534, w: 0.98532784}
+  m_LocalRotation: {x: 0.17067231, y: -0.000000016953926, z: 0.0000000029366534, w: 0.98532784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1826,6 +1822,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9560272a28112a642bdbe751ce3cd442, type: 3}
   - {fileID: 21300000, guid: e9638fde84655514e8f87ed00c0fb873, type: 3}
   animator: {fileID: 1161972057}
+  soundManager: {fileID: 0}
+  hurtSFX: {fileID: 0}
 --- !u!1 &1295367579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 60ff8d1733c8a3f4bb77a25373459d5d, type: 3}
@@ -1983,7 +1981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -27.000092, y: 0}
+  m_AnchoredPosition: {x: -27.000122, y: 0}
   m_SizeDelta: {x: 164.9481, y: 129.4704}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1433138499
@@ -2776,34 +2774,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2129470993 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 60ff8d1733c8a3f4bb77a25373459d5d, type: 3}
-  m_PrefabInstance: {fileID: 187757108}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &2129470994
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129470993}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Height: 8
-  m_Direction: 1
-  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1001 &5041501729064862774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2905,6 +2875,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1462727135}
+    - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
+      propertyPath: ropeWindUpSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 915bd94f6dcf7e74e844639d10b4afaf, type: 3}
     - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
       propertyPath: modelTransform
       value: 

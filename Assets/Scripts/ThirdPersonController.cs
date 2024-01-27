@@ -84,6 +84,8 @@ public class ThirdPersonController : MonoBehaviour
     public AudioClip jumpSFX;
     public AudioClip dashSFX;
     public AudioClip ropeThrowSFX;
+    public AudioClip ropeWindUpSFX;
+    public AudioClip ropeSpinningEnemySFX;
 
     enum LassoState
     {
@@ -194,6 +196,7 @@ public class ThirdPersonController : MonoBehaviour
             {
                 case LassoState.NONE:
                     print("lassoing windup!");
+                    soundManager.PlaySFX(ropeWindUpSFX, 1);
                     StartLassoWindup();
                     player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
                     player_animation.Play("BananaCowboyLassoWindUp");
@@ -244,10 +247,14 @@ public class ThirdPersonController : MonoBehaviour
         } 
         else if (lasso_state == LassoState.ENEMY_HOLD)
         {
+            if (!soundManager.soundEffectObject.clip.name.Contains("Spinning")) {
+                soundManager.PlaySFX(ropeSpinningEnemySFX, 1);
+            }
             HoldLassoEnemy();
         }
         else if (lasso_state == LassoState.ENEMY_AIM)
         {
+            soundManager.StopSFX();
             AimLassoEnemy();
         }
 
@@ -382,7 +389,6 @@ public class ThirdPersonController : MonoBehaviour
             }
         }
 
-
         // Place indicators for windup
         // 1. First, deactivate all previous indicators
         // 2. Then, activate all indicators that are necessary
@@ -440,6 +446,8 @@ public class ThirdPersonController : MonoBehaviour
     {
         if (lasso_target != null)
         {
+            soundManager.PlaySFX(ropeThrowSFX, 1);
+
             if (lasso_target.GetComponent<LassoableEnemy>() != null)
             {
                 GrabLassoEnemy(lasso_target.GetComponent<LassoableEnemy>());
@@ -447,7 +455,6 @@ public class ThirdPersonController : MonoBehaviour
             else if (lasso_target.GetComponent<Swingable>() != null)
             {
                 StartSwing(lasso_target.transform.position);
-                soundManager.PlaySFX(ropeThrowSFX, 1);
             }
         }
         else

@@ -188,7 +188,6 @@ MonoBehaviour:
   ground_mask:
     serializedVersion: 2
     m_Bits: 8
-  ground_detection_height: 2
 --- !u!114 &2665218915048826514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,11 +219,13 @@ MonoBehaviour:
   jump_buffer: 1
   lasso_reach_distance: 25
   lasso_dectection_distance: 50
+  lasso_throw_force: 25
   lasso_scope_indicator: {fileID: 5057118661661899772, guid: 4be135e70648e0b448099190bb14742d, type: 3}
   max_number_of_indicators: 10
   targeted_color: {r: 0, g: 1, b: 0, a: 1}
   out_of_range_color: {r: 1, g: 0, b: 0, a: 1}
   in_range_color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  lasso_num_lr_wrap_joints: 4
   lassoKey: 323
   jumpKey: 32
   sprintKey: 304
@@ -234,6 +235,9 @@ MonoBehaviour:
   runSFX: {fileID: 8300000, guid: 5ee2202c8995dfb49b2ccf7a0bbdbff4, type: 3}
   jumpSFX: {fileID: 8300000, guid: 7fc00789aea3c7745b187349df625f86, type: 3}
   dashSFX: {fileID: 8300000, guid: 07242dae6892bef43b99df7126b6c879, type: 3}
+  ropeThrowSFX: {fileID: 8300000, guid: 2685db1f7e2d1ce47aba7235a671ad7f, type: 3}
+  ropeWindUpSFX: {fileID: 8300000, guid: 9d917eb3a8fb71a45bab64a2118d44fc, type: 3}
+  ropeSpinningEnemySFX: {fileID: 8300000, guid: 086bdb14b92a57c43b294a83c5937689, type: 3}
 --- !u!120 &7452558265415343420
 LineRenderer:
   serializedVersion: 2
@@ -466,7 +470,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e9638fde84655514e8f87ed00c0fb873, type: 3}
   animator: {fileID: 8034820637781122476}
   soundManager: {fileID: 0}
-  hurtSFX: {fileID: 0}
+  hurtSFX: {fileID: 8300000, guid: e5cdb3ddb77b5944fb200f40b2112cf5, type: 3}
 --- !u!1 &4929128425825576784
 GameObject:
   m_ObjectHideFlags: 0
