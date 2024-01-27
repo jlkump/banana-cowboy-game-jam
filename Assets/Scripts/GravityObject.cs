@@ -10,7 +10,6 @@ public class GravityObject : MonoBehaviour
     bool on_ground = false;
 
     public LayerMask ground_mask;
-    public float ground_detection_height = 10.0f;
 
     public float max_fall_speed { get; set; } = 30.0f;
     public float gravity_mult { get; set; } = 1.0f;

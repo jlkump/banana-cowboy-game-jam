@@ -44,22 +44,26 @@ public class ThirdPersonController : MonoBehaviour
     private float jump_buffer_timer;
 
     [Header("Lasso")]
+    // public float lasso_length = 15f; // TODO: Use this?
     public float lasso_reach_distance = 25f;
-    public float lasso_dectection_distance = 50f;
+    public float lasso_dectection_distance = 90f;
+    public float lasso_throw_force = 20.0f;
     public GameObject lasso_scope_indicator;
-    //public Material lasso_scope_mat;
     public int max_number_of_indicators = 10;
 
+    private GameObject lasso_target; // Null when no valid target. Targets are swingable, enemy, and collectable
+
+    [Header("Lasso Rendering")]
     public Color targeted_color = Color.green;
     public Color out_of_range_color = Color.red;
     public Color in_range_color = Color.grey;
-
-    private GameObject lasso_target; // Null when no valid target. Targets are swingable, enemy, and collectable
     private List<GameObject> indicators;
 
+    public int lasso_num_lr_wrap_joints = 4;
+    private Vector3 lasso_lr_end_pos;
+    private List<Vector3> lasso_rope_wrap_positions;
 
     [Header("Swinging")]
-    private Vector3 swing_point;
     private SpringJoint swing_joint;
     private Vector3 current_rope_end_pos;
 
@@ -81,9 +85,11 @@ public class ThirdPersonController : MonoBehaviour
         NONE,
         WOUND_UP,
         SWING,
-        ENEMY
+        ENEMY_HOLD,
+        ENEMY_AIM
     }
     private LassoState lasso_state = LassoState.NONE;
+    private LassoableEnemy held_enemy = null;
 
     enum State
     {
@@ -109,6 +115,7 @@ public class ThirdPersonController : MonoBehaviour
             indicators.Add(indicator);
         }
         lasso_target = null;
+        lasso_rope_wrap_positions = new List<Vector3>();
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
     }
@@ -182,7 +189,10 @@ public class ThirdPersonController : MonoBehaviour
                     print("lasso end swing");
                     EndSwing();
                     break;
-                case LassoState.ENEMY:
+                case LassoState.ENEMY_HOLD:
+                    AimLassoEnemy();
+                    print("Lasso aim enemy");
+                    break;
                 default:
                     // Shouldn't be possible
                     print("Click down on invalid lasso state");
@@ -200,7 +210,8 @@ public class ThirdPersonController : MonoBehaviour
                     print("lasso windup release");
                     EndLassoWindup();
                     break;
-                case LassoState.ENEMY:
+                case LassoState.ENEMY_AIM:
+                    ThrowLassoEnemy();
                     print("Lasso release of enemy");
                     break;
                 case LassoState.SWING:
@@ -216,6 +227,14 @@ public class ThirdPersonController : MonoBehaviour
         if (lasso_state == LassoState.WOUND_UP)
         {
             LassoWindup();
+        } 
+        else if (lasso_state == LassoState.ENEMY_HOLD)
+        {
+            HoldLassoEnemy();
+        }
+        else if (lasso_state == LassoState.ENEMY_AIM)
+        {
+            AimLassoEnemy();
         }
 
         if (Input.GetKeyUp(jumpKey)) { EndJump(); }
@@ -303,6 +322,10 @@ public class ThirdPersonController : MonoBehaviour
     void StartLassoWindup()
     {
         lasso_state = LassoState.WOUND_UP;
+
+        current_rope_end_pos = lasso_throw_pos.position;
+        lasso_lr_end_pos = transform.position + transform.up;
+        lr.positionCount = 2;
     }
 
     void LassoWindup()
@@ -310,6 +333,9 @@ public class ThirdPersonController : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, lasso_dectection_distance);
 
         List<Vector3> indicator_positions = new List<Vector3>();
+
+        current_rope_end_pos = lasso_throw_pos.position;
+        lasso_lr_end_pos = transform.position + transform.up;
 
         Vector3 closest_point = Vector3.zero;
         float closest_distance = float.MaxValue;
@@ -402,13 +428,9 @@ public class ThirdPersonController : MonoBehaviour
         {
             if (lasso_target.GetComponent<LassoableEnemy>() != null)
             {
-                // TODO: Make this method (LassoEnemy) for the lassoable-enemy component script
-                // which will attach the enemy to the player as now a child, so it follows the player
-                // until it is thrown.
-
-                // Or something else, just make the LassoEnemy work
-            }
-            if (lasso_target.GetComponent<Swingable>() != null)
+                GrabLassoEnemy(lasso_target.GetComponent<LassoableEnemy>());
+            } 
+            else if (lasso_target.GetComponent<Swingable>() != null)
             {
                 StartSwing(lasso_target.transform.position);
             }
@@ -429,12 +451,12 @@ public class ThirdPersonController : MonoBehaviour
     {
 
         lasso_state = LassoState.SWING;
-        swing_point = swing_position;
+        lasso_lr_end_pos = swing_position;
         swing_joint = player_root.gameObject.AddComponent<SpringJoint>();
         swing_joint.autoConfigureConnectedAnchor = false;
-        swing_joint.connectedAnchor = swing_point;
+        swing_joint.connectedAnchor = swing_position;
 
-        float distance_from_point = Vector3.Distance(player_root.position, swing_point);
+        float distance_from_point = Vector3.Distance(player_root.position, swing_position);
 
         swing_joint.minDistance = distance_from_point * 0.6f;
         swing_joint.maxDistance = distance_from_point * 0.25f;
@@ -455,17 +477,56 @@ public class ThirdPersonController : MonoBehaviour
         Destroy(swing_joint);
     }
 
+    void GrabLassoEnemy(LassoableEnemy enemy)
+    {
+        lasso_state = LassoState.ENEMY_HOLD;
+        enemy.SetLassoActor(transform);
+        held_enemy = enemy;
+        current_rope_end_pos = lasso_throw_pos.position;
+        lasso_lr_end_pos = held_enemy.transform.position;
+        lr.positionCount = 2;
+    }
+
+    void HoldLassoEnemy()
+    {
+        // Might need nothing here, but here just in case
+        current_rope_end_pos = held_enemy.transform.position;
+    }
+
+    void AimLassoEnemy()
+    {
+        // TODO: Trajectory prediction
+        current_rope_end_pos = held_enemy.transform.position;
+        lasso_state = LassoState.ENEMY_AIM;
+    }
+
+    void ThrowLassoEnemy()
+    {
+        // TODO: Release enemy
+        held_enemy.ThrowEnemyInDirection(cameraTransform.forward + transform.up * 0.2f, lasso_throw_force);
+        lasso_state = LassoState.NONE;
+        lr.positionCount = 0;
+    }
+
     void DrawRope()
     {
-        if (!swing_joint)
+        if (lasso_state == LassoState.NONE)
         {
             return;
         }
 
-        current_rope_end_pos = Vector3.Lerp(current_rope_end_pos, swing_point, Time.deltaTime * 8.0f);
+        if (lasso_state == LassoState.SWING)
+        {
+            current_rope_end_pos = Vector3.Lerp(current_rope_end_pos, lasso_lr_end_pos, Time.deltaTime * 8.0f);
+        }
 
         lr.SetPosition(0, lasso_throw_pos.position);
         lr.SetPosition(1, current_rope_end_pos);
+
+        for (int i = 0; i < lasso_rope_wrap_positions.Count(); i++)
+        {
+            lr.SetPosition(2 + i, lasso_rope_wrap_positions[i]);
+        }
     }
 
     private void LateUpdate()
