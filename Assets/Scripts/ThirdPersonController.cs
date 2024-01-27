@@ -11,6 +11,7 @@ public class ThirdPersonController : MonoBehaviour
 {
     Transform cameraTransform;
     [Header("References")]
+    [SerializeField] public UIManager ui;
     public Transform player_root;
     public Transform modelTransform;
     public LineRenderer lr;
@@ -111,11 +112,11 @@ public class ThirdPersonController : MonoBehaviour
         // TODO: Remove this, is just for testing
         if (Input.GetKeyDown(KeyCode.O))
         {
-            UIManager.ChangeHealth(-1);
+            ui.ChangeHealth(-1);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            UIManager.ChangeHealth(1);
+            ui.ChangeHealth(1);
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");

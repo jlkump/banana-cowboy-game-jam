@@ -9,21 +9,20 @@ using UnityEngine;
    Modify this later when hazards are fully designed. */
 public class HurtyZone : MonoBehaviour
 {
-    
-    [field: SerializeField]
-    public bool kill { get; private set; }
-    private void OnTriggerEnter(Collider other)
-    {
+
+    [SerializeField] public UIManager UI;
+    [field: SerializeField] public bool kill { get; private set; }
+    private void OnTriggerEnter(Collider other) {
         // check if the collided entity is the player
         if (kill)
         {
             // damage the player
-            UIManager.ChangeHealth(-3);
+            UI.ChangeHealth(-3);
         } else {
             if (other.CompareTag("Player"))
             {
                 // damage the player
-                UIManager.ChangeHealth(-1);
+                UI.ChangeHealth(-1);
             }
         }
        

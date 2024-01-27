@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    [SerializeField] public UIManager ui;
     private void OnTriggerEnter(Collider item)
     {
         if (item.CompareTag("Player"))
         {
-            UIManager.ChangeStarDustAmount(1);
+            ui.ChangeStarDustAmount(1);
             Destroy(gameObject);
         }
     }

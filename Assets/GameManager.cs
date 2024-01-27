@@ -6,7 +6,17 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    // serialized fields
+    [SerializeField] Vector3 defRespawnCoords;
+    [SerializeField] ThirdPersonController player;
+    
     public GameObject pauseMenu;
+    private Vector3 respawnCoords = Vector3.zero;
+
+    private void Start()
+    {
+        respawnCoords = defRespawnCoords;
+    }
 
     // Update is called once per frame
     void Update()
@@ -28,6 +38,16 @@ public class GameManager : MonoBehaviour
                 UnityEngine.Cursor.visible = true;
             }
         }
+    }
+
+    // resetScene with the players most recent respawn coordinates
+    public void resetSceneWithRespawnCoords() {
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        player.transform.position = respawnCoords;
+    }
+
+    public void setRespawn(Vector3 coords) {
+        respawnCoords = coords;
     }
 
     public void ButtonsPressed(Button button)
