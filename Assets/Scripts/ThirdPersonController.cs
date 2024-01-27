@@ -11,7 +11,7 @@ public class ThirdPersonController : MonoBehaviour
 {
     Transform cameraTransform;
     [Header("References")]
-    [SerializeField] public UIManager ui;
+    public UIManager ui;
     public Transform player_root;
     public Transform modelTransform;
     public LineRenderer lr;
@@ -82,6 +82,7 @@ public class ThirdPersonController : MonoBehaviour
     public AudioClip runSFX;
     public AudioClip jumpSFX;
     public AudioClip dashSFX;
+    public AudioClip ropeThrowSFX;
 
     enum LassoState
     {
@@ -121,6 +122,7 @@ public class ThirdPersonController : MonoBehaviour
         lasso_rope_wrap_positions = new List<Vector3>();
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+        ui = GameObject.Find("Player UI").GetComponent<UIManager>();
     }
 
     void Update()
@@ -180,7 +182,7 @@ public class ThirdPersonController : MonoBehaviour
             player_state = State.AIR;
         }
 
-        if (Input.GetKeyDown(lassoKey) && !gameManager.paused)
+        if (Input.GetKeyDown(lassoKey) && !gameManager.pauseMenu.activeSelf)
         {
             switch (lasso_state)
             {
@@ -437,6 +439,7 @@ public class ThirdPersonController : MonoBehaviour
             else if (lasso_target.GetComponent<Swingable>() != null)
             {
                 StartSwing(lasso_target.transform.position);
+                soundManager.PlaySFX(ropeThrowSFX, 1);
             }
         }
         else

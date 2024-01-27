@@ -119,6 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc62bfe5e6265614894be2cf7a32751f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui: {fileID: 0}
+  soundManager: {fileID: 0}
+  collectSFX: {fileID: 8300000, guid: fb6dd738b31efb4469152c839a3cecbf, type: 3}
 --- !u!54 &8310675176597983987
 Rigidbody:
   m_ObjectHideFlags: 0

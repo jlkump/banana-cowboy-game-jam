@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
     public Sprite[] bananaIcons;
 
     public Animator animator;
+    public SoundManager soundManager;
+
+    public AudioClip hurtSFX;
 
     private void Start()
     {
@@ -28,6 +31,8 @@ public class UIManager : MonoBehaviour
         instance.starDustUI.text = "X " + starDustAmount.ToString();
         health = 3;
         instance.bananaIcon.GetComponent<Image>().sprite = instance.bananaIcons[health];
+        soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+
     }
 
     public void ChangeStarDustAmount(int change)
@@ -38,6 +43,7 @@ public class UIManager : MonoBehaviour
 
     public void ChangeHealth(int change)
     {
+        soundManager.PlaySFX(hurtSFX, 1);
         health += change;
         if (change < 0)
         {
@@ -50,6 +56,9 @@ public class UIManager : MonoBehaviour
         if(health == 0)
         {
             // TODO add death screen here
+            health = 3;
+            instance.bananaIcon.GetComponent<Image>().sprite = instance.bananaIcons[health];
+
             gameManager.resetSceneWithRespawnCoords();
         }
     }

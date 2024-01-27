@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] ThirdPersonController player;
 
     public GameObject pauseMenu;
-    public bool paused;
     private Vector3 respawnCoords = Vector3.zero;
 
     private void Start()
@@ -30,7 +29,6 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1.0f;
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 UnityEngine.Cursor.visible = false;
-                paused = false;
             }
             else
             {
@@ -38,7 +36,6 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 UnityEngine.Cursor.visible = true;
-                paused = true;
             }
         }
     }
