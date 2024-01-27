@@ -291,7 +291,7 @@ public class ThirdPersonController : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             Collider collider = colliders[i];
-            if (collider.tag == "Lasso Object")
+            if (collider.gameObject.GetComponent<LassoableEnemy>() != null || collider.gameObject.GetComponent<Swingable>() != null)
             {
                 // Note location of object for the indicators
                 

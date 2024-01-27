@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 27515256}
   m_Layer: 3
   m_Name: Cube (1)
-  m_TagString: Lasso Object
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 344050300}
   m_Layer: 3
   m_Name: Cube (2)
-  m_TagString: Lasso Object
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -998,9 +998,9 @@ GameObject:
   - component: {fileID: 944578341}
   - component: {fileID: 944578340}
   - component: {fileID: 944578345}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Planet
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1602,7 +1602,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284457045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17067231, y: 0.000000016953926, z: -0.0000000029366534, w: 0.98532784}
+  m_LocalRotation: {x: 0.17067231, y: -0.000000016953926, z: 0.0000000029366534, w: 0.98532784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2470,6 +2470,14 @@ PrefabInstance:
     - target: {fileID: 2665218915048826514, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
       propertyPath: gravity_mult_on_jump_release
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822149453230830322, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
+      propertyPath: ground_mask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822149453230830322, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
+      propertyPath: ground_detection_height
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7003146359924937596, guid: c6fba18373c421943ab74bd396fd8358, type: 3}
       propertyPath: m_LocalPosition.x
