@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class ThirdPersonController : MonoBehaviour
     public Transform modelTransform;
     public LineRenderer lr;
     public Transform lasso_throw_pos;
-    public LayerMask swingable;
+    //public LayerMask swingable;
 
     //public Transform temp;
 
@@ -38,27 +39,50 @@ public class ThirdPersonController : MonoBehaviour
     public float jump_buffer = 0.1f;
     private float jump_buffer_timer;
 
+    [Header("Lasso")]
+    public float lasso_reach_distance = 25f;
+    public float lasso_dectection_distance = 50f;
+    public GameObject lasso_indicator;
+    public int max_number_of_indicators = 10;
+
+    public Color targeted_color = Color.green;
+    public Color out_of_range_color = Color.red;
+    public Color in_range_color = Color.grey;
+
+    private GameObject lasso_target; // Null when no valid target. Targets are swingable, enemy, and collectable
+    private List<GameObject> indicators;
+
+
     [Header("Swinging")]
-    public float swing_reach_distance = 25f;
+    //public float swing_reach_distance = 25f;
+    //public float swing_detection_distance = 50f;
     private Vector3 swing_point;
     private SpringJoint swing_joint;
     private Vector3 current_rope_end_pos;
 
     [Header("Input")]
-    public KeyCode swingKey = KeyCode.Mouse0;
+    public KeyCode lassoKey = KeyCode.Mouse0;
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
     private Vector3 _moveInput;
+
+    enum LassoState
+    {
+        NONE,
+        WOUND_UP,
+        SWING,
+        ENEMY
+    }
+    private LassoState lasso_state = LassoState.NONE;
 
     enum State
     {
         AIR,
         WALK,
         RUN,
-        SWING,
     };
-    private State state = State.AIR;
+    private State player_state = State.AIR; // TODO: Add methods for SetState, IsValidState for state machine
 
     void Start()
     {
@@ -67,10 +91,20 @@ public class ThirdPersonController : MonoBehaviour
         UnityEngine.Cursor.visible = false;
         jump_hold_buffer_timer = 0.0f;
         jump_buffer_timer = 0.0f;
+
+        indicators = new List<GameObject>(max_number_of_indicators);
+        for (int i = 0; i < max_number_of_indicators; i++)
+        {
+            GameObject indicator = Instantiate(lasso_indicator, transform.position, Quaternion.identity);
+            indicator.SetActive(false); // Should make invisible, we shall see
+            indicators.Add(indicator);
+        }
+        lasso_target = null;
     }
 
     void Update()
     {
+        // TODO: Remove this, is just for testing
         if (Input.GetKeyDown(KeyCode.O))
         {
             UIManager.ChangeHealth(-1);
@@ -92,7 +126,7 @@ public class ThirdPersonController : MonoBehaviour
         if (GetComponent<GravityObject>().IsOnGround())
         {
             LastOnGroundTime = 0.1f;
-            state = Input.GetKeyDown(sprintKey) ? State.RUN : State.WALK;
+            player_state = Input.GetKeyDown(sprintKey) ? State.RUN : State.WALK;
             if (Input.GetKeyDown(jumpKey)) 
             {
                 StartJump();
@@ -102,13 +136,58 @@ public class ThirdPersonController : MonoBehaviour
                 StartJump();
             }
         }
-        else if (state != State.SWING)
+        else
         {
-            state = State.AIR;
+            player_state = State.AIR;
         }
 
-        if (Input.GetKeyDown(swingKey)) { StartSwing(); }
-        if (Input.GetKeyUp(swingKey)) { EndSwing(); }
+        if (Input.GetKeyDown(lassoKey))
+        {
+            switch(lasso_state)
+            {
+                case LassoState.NONE:
+                    print("lassoing windup!");
+                    StartLassoWindup();
+                    break;
+                case LassoState.WOUND_UP:
+                case LassoState.SWING:
+                case LassoState.ENEMY:
+                default:
+                    // Shouldn't be possible
+                    print("Click down on invalid lasso state");
+                    break;
+                }
+        }
+
+        if (Input.GetKeyUp(lassoKey)) { 
+
+            switch (lasso_state)
+            {
+
+                case LassoState.WOUND_UP:
+                    print("lasso windup release");
+                    EndLassoWindup();
+                    break;
+                case LassoState.SWING:
+                    print("lasso end swing");
+                    EndSwing();
+                    break;
+                case LassoState.ENEMY:
+                    print("Lasso release of enemy");
+                    break;
+                case LassoState.NONE:
+                default:
+                    // Shouldn't be possible
+                    print("Click release on invalid lasso state");
+                    break;
+                }
+        }
+
+        if (lasso_state == LassoState.WOUND_UP)
+        {
+            LassoWindup();
+        }
+
         if (Input.GetKeyUp(jumpKey)) { EndJump(); }
 
         jump_hold_buffer_timer -= Time.deltaTime;
@@ -207,35 +286,152 @@ public class ThirdPersonController : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(movement);
     }
 
-    void StartSwing()
+    void StartLassoWindup()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, swing_reach_distance, swingable))
+        lasso_state = LassoState.WOUND_UP;
+    }
+
+    void LassoWindup()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, lasso_dectection_distance);
+
+        List<Vector3> indicator_positions = new List<Vector3>();
+
+        Vector3 closest_point = Vector3.zero;
+        float closest_distance = float.MaxValue;
+        Collider closest_target_hit = null;
+
+        for (int i = 0; i < colliders.Length; i++)
         {
-            state = State.SWING;
-            swing_point = hit.point;
-            swing_joint = player_root.gameObject.AddComponent<SpringJoint>();
-            swing_joint.autoConfigureConnectedAnchor = false;
-            swing_joint.connectedAnchor = swing_point;
-
-            float distance_from_point = Vector3.Distance(player_root.position, swing_point);
-
-            swing_joint.minDistance = distance_from_point * 0.8f;
-            swing_joint.maxDistance = distance_from_point * 0.25f;
-
-            current_rope_end_pos = lasso_throw_pos.position;
-
-            swing_joint.spring = 4.5f;
-            swing_joint.damper = 7f;
-            swing_joint.massScale = 4.5f;
-
-            lr.positionCount = 2;
+            Collider collider = colliders[i];
+            if (collider.tag == "Lasso Object")
+            {
+                // Note location of object for the indicators
+                
+                Vector3 viewport_point = Camera.main.WorldToViewportPoint(collider.transform.position);
+                // Check if we are in the viewport, if we are, then add the collider positions for indicators.
+                // Also mark the closest hit
+                if (viewport_point.x > 0 && viewport_point.y > 0 &&
+                    viewport_point.x < 1.0 && viewport_point.y < 1.0 &&
+                    viewport_point.z > 0.0)
+                {
+                    indicator_positions.Add(collider.transform.position);
+                    Vector3 viewport_point_centered = viewport_point - new Vector3(0.5f, 0.5f, 0.0f);
+                    viewport_point_centered.z = 0;
+                    if (viewport_point_centered.magnitude < closest_distance)
+                    {
+                        closest_target_hit = collider;
+                        closest_distance = viewport_point_centered.magnitude;
+                        closest_point = viewport_point;
+                    }
+                }
+            }
         }
+
+
+        // Place indicators for windup
+        // 1. First, deactivate all previous indicators
+        // 2. Then, activate all indicators that are necessary
+
+        for (int i = 0; i < indicators.Count; i++)
+        {
+            indicators[i].SetActive(false);
+        }
+        int indicator_index = 0; // This is used to assign indicators. If it is ever >= indicators.Count, then we just stop doing indicators
+        for (int i = 0; i < indicator_positions.Count; i++)
+        {
+            Vector3 viewport_point = Camera.main.WorldToViewportPoint(indicator_positions[i]);
+            if (indicator_index < indicators.Count)
+            {
+                GameObject current_indicator = indicators[indicator_index];
+                current_indicator.SetActive(true);
+                current_indicator.transform.position = indicator_positions[i];
+                current_indicator.GetComponent<Renderer>().enabled = true;
+                indicator_index++;
+                // The indicator is in view, so place an indicator object on it
+                if (Vector3.Distance(indicator_positions[i], transform.position) < lasso_reach_distance)
+                {
+                    if (viewport_point == closest_point)
+                    {
+                        // The lasso object is within range and the closest target, show a green indicator
+                        current_indicator.GetComponent<Renderer>().material.SetColor("_Color", targeted_color);
+                    }
+                    else
+                    {
+                        // The lasso object is within range, place a grey indicator if not the closest target
+                        current_indicator.GetComponent<Renderer>().material.SetColor("_Color", in_range_color);
+                    }
+                }
+
+                if (Vector3.Distance(indicator_positions[i], transform.position) > lasso_reach_distance)
+                {
+                    // The lasso object is outside range, place a red indicator
+                    current_indicator.GetComponent<Renderer>().material.SetColor("_Color", out_of_range_color);
+                }
+            }
+        }
+
+        if (closest_target_hit == null)
+        {
+            lasso_target = null;
+        } 
+        else
+        {
+            lasso_target = closest_target_hit.gameObject;
+        }
+    }
+
+    void EndLassoWindup()
+    {
+        if (lasso_target != null)
+        {
+            if (lasso_target.GetComponent<LassoableEnemy>() != null)
+            {
+                // TODO: Make this method (LassoEnemy) for the lassoable-enemy component script
+                // which will attach the enemy to the player as now a child, so it follows the player
+                // until it is thrown.
+
+                // Or something else, just make the LassoEnemy work
+            }
+            if (lasso_target.GetComponent<Swingable>() != null)
+            {
+                StartSwing(lasso_target.transform.position);
+            }
+        }
+
+        // Disable all indicators
+        for (int i = 0; i < indicators.Count; i++)
+        {
+            indicators[i].SetActive(false);
+        }
+    }
+
+    void StartSwing(Vector3 swing_position)
+    {
+
+        lasso_state = LassoState.SWING;
+        swing_point = swing_position;
+        swing_joint = player_root.gameObject.AddComponent<SpringJoint>();
+        swing_joint.autoConfigureConnectedAnchor = false;
+        swing_joint.connectedAnchor = swing_point;
+
+        float distance_from_point = Vector3.Distance(player_root.position, swing_point);
+
+        swing_joint.minDistance = distance_from_point * 0.6f;
+        swing_joint.maxDistance = distance_from_point * 0.25f;
+
+        current_rope_end_pos = lasso_throw_pos.position;
+
+        swing_joint.spring = 4.5f;
+        swing_joint.damper = 7f;
+        swing_joint.massScale = 4.5f;
+
+        lr.positionCount = 2;
     }
     
     void EndSwing()
     {
-        state = State.WALK; // Will be corrected on next update if wrong
+        lasso_state = LassoState.NONE; // Will be corrected on next update if wrong
         lr.positionCount = 0;
         Destroy(swing_joint);
     }
