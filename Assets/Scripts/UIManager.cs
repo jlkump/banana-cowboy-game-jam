@@ -7,12 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] public GameManager gameManager;
+
     // THIS SCRIPT SHOULD BE LOADED IN ONCE
-    public static int starDustAmount = 0;
+    public int starDustAmount = 0;
     public TMP_Text starDustUI;
     public static UIManager instance;
 
-    public static int health;
+    public int health;
     // The icon that is displayed for health
     public GameObject bananaIcon;
     // Stores all of the icons
@@ -28,13 +30,13 @@ public class UIManager : MonoBehaviour
         instance.bananaIcon.GetComponent<Image>().sprite = instance.bananaIcons[health];
     }
 
-    public static void ChangeStarDustAmount(int change)
+    public void ChangeStarDustAmount(int change)
     {
         starDustAmount += change;
         instance.starDustUI.text = "X "+starDustAmount.ToString();
     }
 
-    public static void ChangeHealth(int change)
+    public void ChangeHealth(int change)
     {
         health += change;
         if (change < 0)
@@ -48,7 +50,7 @@ public class UIManager : MonoBehaviour
         if(health == 0)
         {
             // TODO add death screen here
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            gameManager.resetSceneWithRespawnCoords();
         }
     }
 }
