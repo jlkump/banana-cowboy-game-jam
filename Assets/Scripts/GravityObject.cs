@@ -59,8 +59,24 @@ public class GravityObject : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision != null && collision.gameObject != null && collision.gameObject.tag == "ground")
+        {
+            on_ground = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision != null && collision.gameObject != null && collision.gameObject.tag == "ground")
+        {
+            on_ground = false;
+        }
+    }
+
     public bool IsOnGround()
     {
-        return true;
+        return on_ground;
     }
 }
