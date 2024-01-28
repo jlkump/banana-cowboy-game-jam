@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
 {
     // serialized fields
     [SerializeField] Vector3 defRespawnCoords;
+    [SerializeField] Vector3 defcheckpointCoords;
     [SerializeField] ThirdPersonController player;
 
     public GameObject pauseMenu;
 
-    private void Start()
+    private void Awake()
     {
-        // set default respawn coords
+        // set respawn coords
         PlayerData.respawnCoords = defRespawnCoords;
+        PlayerData.checkpointCoords = defcheckpointCoords;
     }
 
     // Update is called once per frame

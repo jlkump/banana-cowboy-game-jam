@@ -110,9 +110,17 @@ public class ThirdPersonController : MonoBehaviour
     };
     private State player_state = State.AIR; // TODO: Add methods for SetState, IsValidState for state machine
 
+    private void Awake() {
+        if (PlayerData.checkpointsReached > 0) {
+            this.transform.position = PlayerData.checkpointCoords;
+        }
+        else {
+            this.transform.position = PlayerData.respawnCoords;
+        }
+    }
+
     void Start()
     {
-        this.transform.position = PlayerData.respawnCoords;
         cameraTransform = Camera.main.transform;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;

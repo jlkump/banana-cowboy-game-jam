@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class RespawnPoint : MonoBehaviour
 {
-    [field: SerializeField] public Vector3 respawnPos { get; private set; }
-    [SerializeField] public GameManager gameManager;
+    [field: SerializeField] public int checkpointNum { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +15,7 @@ public class RespawnPoint : MonoBehaviour
     {
         if (other.CompareTag("Player")) {
             // set game managers respawn coords to set coordinates
-            gameManager.setRespawn(respawnPos);
+            PlayerData.checkpointsReached = checkpointNum;
         }
     }
 }

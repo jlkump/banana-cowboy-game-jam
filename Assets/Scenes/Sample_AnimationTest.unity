@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382094975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.059016056, y: -0.00000001731006, z: 0.0000000010233552, w: 0.99825704}
+  m_LocalRotation: {x: 0.059016053, y: 0.000000017310056, z: -0.0000000010233548, w: 0.99825704}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1229,7 +1229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14767143, y: 0.00000003403548, z: -0.000000005081782, w: 0.9890365}
+  m_LocalRotation: {x: 0.14767143, y: -0.00000003403548, z: 0.000000005081782, w: 0.9890365}
   m_LocalPosition: {x: 0, y: 2.5, z: 17.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1341,7 +1341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113231750}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1476714, y: 0.00000001701774, z: -0.0000000025408904, w: 0.9890365}
+  m_LocalRotation: {x: 0.1476714, y: -0.00000001701774, z: 0.0000000025408904, w: 0.9890365}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2204,15 +2204,27 @@ PrefabInstance:
       objectReference: {fileID: 425933393}
     - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
       propertyPath: defRespawnCoords.x
-      value: 18
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
       propertyPath: defRespawnCoords.y
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
       propertyPath: defRespawnCoords.z
-      value: 46
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defcheckpointCoords.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defcheckpointCoords.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defcheckpointCoords.z
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2671,15 +2683,19 @@ PrefabInstance:
       objectReference: {fileID: 1462727135}
     - target: {fileID: 3714464034720629727, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
       propertyPath: <respawnPos>k__BackingField.x
-      value: 18
+      value: 555
       objectReference: {fileID: 0}
     - target: {fileID: 3714464034720629727, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
       propertyPath: <respawnPos>k__BackingField.y
-      value: 2
+      value: 555
       objectReference: {fileID: 0}
     - target: {fileID: 3714464034720629727, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
       propertyPath: <respawnPos>k__BackingField.z
-      value: 46
+      value: 555
+      objectReference: {fileID: 0}
+    - target: {fileID: 3714464034720629727, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
+      propertyPath: <checkpointNum>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5906729651569057166, guid: c780b8b6fd167d547aa91b156dfc83ce, type: 3}
       propertyPath: m_Name
