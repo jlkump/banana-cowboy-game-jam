@@ -20,7 +20,7 @@ public class LassoableEnemy : MonoBehaviour
     private float orbit_time = 0.0f;
 
     private bool thrown = false;
-
+    public AudioClip deathSFX;
     // Update is called once per frame
     void Update()
     {
@@ -69,6 +69,7 @@ public class LassoableEnemy : MonoBehaviour
         if (thrown)
         {
             // SPLAT!
+            GameObject.Find("Sound Manager").GetComponent<SoundManager>().PlaySFX(deathSFX, 1);
             Destroy(gameObject);
         }
     }

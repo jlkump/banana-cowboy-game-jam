@@ -18,11 +18,15 @@ public class MenuManager : MonoBehaviour
                 SceneManager.LoadScene(1);
                 break;
             case "Credits":
-                creditScreen.SetActive(true);
+                if(creditScreen != null)
+                    creditScreen.SetActive(true);
                 break;
             case "Back":
                 // Make everything false here
                 creditScreen.SetActive(false);
+                break;
+            case "Main Menu":
+                SceneManager.LoadScene(0);
                 break;
         }
     }

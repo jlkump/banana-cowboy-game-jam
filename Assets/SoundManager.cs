@@ -27,7 +27,7 @@ public class SoundManager : MonoBehaviour
         {
             soundEffectObject.pitch = Random.Range(1f, 1.5f);
         }
-        if (effect.name.Contains("Spinning"))
+        if (effect.name.Contains("Spinning") || effect.name.Contains("Windup"))
         {
             soundEffectObject.loop = true;
         }

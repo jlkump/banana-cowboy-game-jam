@@ -36,6 +36,8 @@ public class ThirdPersonController : MonoBehaviour
     private bool can_Dash = true;
     private float dash_Cooldown = 0.75f;
     private float dash_Timer = 0.0f;
+    private bool wasInAir = false; // Keep track of the previous state
+
     public float LastOnGroundTime { get; private set; }
 
     [Header("Buffer System")]
@@ -86,6 +88,8 @@ public class ThirdPersonController : MonoBehaviour
     public AudioClip ropeThrowSFX;
     public AudioClip ropeWindUpSFX;
     public AudioClip ropeSpinningEnemySFX;
+    public AudioClip landingSFX;
+
 
     enum LassoState
     {
@@ -153,6 +157,12 @@ public class ThirdPersonController : MonoBehaviour
         if (GetComponent<GravityObject>().IsOnGround())
         {
             LastOnGroundTime = 0.1f;
+            if (wasInAir && !soundManager.soundEffectObject.isPlaying)
+            {
+                soundManager.PlaySFX(landingSFX, 1);
+            }
+            wasInAir = false;
+
             player_state = Input.GetKey(sprintKey) ? State.RUN : State.WALK;
 
             if (_moveInput != Vector3.zero && !soundManager.soundEffectObject.isPlaying)
@@ -195,6 +205,7 @@ public class ThirdPersonController : MonoBehaviour
         else if (LastOnGroundTime <= 0)
         {
             player_state = State.AIR;
+            wasInAir = true;
         }
 
         if (Input.GetKeyDown(lassoKey) && !gameManager.pauseMenu.activeSelf)
@@ -231,6 +242,7 @@ public class ThirdPersonController : MonoBehaviour
             {
 
                 case LassoState.WOUND_UP:
+                    soundManager.StopSFX();
                     print("lasso windup release");
                     EndLassoWindup();
                     break;
