@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Quit":
                 SceneManager.LoadScene(0);
+                PlayerData.resetData();
                 break;
 
         }
