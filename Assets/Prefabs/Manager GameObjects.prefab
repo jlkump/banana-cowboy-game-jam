@@ -395,6 +395,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3482698556386967758}
     - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defCheckpoint.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defCheckpoint.y
+      value: 70.73006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defCheckpoint.z
+      value: 48.547554
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
       propertyPath: defRespawnCoords.x
       value: 500
       objectReference: {fileID: 0}
@@ -405,6 +417,18 @@ PrefabInstance:
     - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
       propertyPath: defRespawnCoords.z
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defSecondCheckpoint.x
+      value: -21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defSecondCheckpoint.y
+      value: 109.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 6384679972305215381, guid: 005848ec0daf9b94d98096cf97f3e276, type: 3}
+      propertyPath: defSecondCheckpoint.z
+      value: 77.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

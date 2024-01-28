@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,8 +11,7 @@ public class MenuManager : MonoBehaviour
 
     public void ButtonsPressed(Button button)
     {
-        transform.GetComponent<AudioSource>().Play()
-            ;
+        transform.GetComponent<AudioSource>().Play();
         switch (button.name)
         {
             case "Play":
@@ -24,6 +24,9 @@ public class MenuManager : MonoBehaviour
             case "Back":
                 // Make everything false here
                 creditScreen.SetActive(false);
+                break;
+            case "Quit":
+                Application.Quit();
                 break;
             case "Main Menu":
                 SceneManager.LoadScene(0);

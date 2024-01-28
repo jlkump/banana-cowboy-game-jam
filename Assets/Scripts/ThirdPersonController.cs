@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Device;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ThirdPersonController : MonoBehaviour
@@ -34,7 +35,7 @@ public class ThirdPersonController : MonoBehaviour
     public bool conserve_momentum = true;
     public float dash_force;
     private bool can_Dash = true;
-    private float dash_Cooldown = 0.75f;
+    private float dash_Cooldown = 0.6f;
     private float dash_Timer = 0.0f;
     private bool wasInAir = false; // Keep track of the previous state
 
@@ -75,7 +76,8 @@ public class ThirdPersonController : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
-    [SerializeField] public GameManager gameManager;
+    // Having as serialized field messes up pause menu
+    public GameManager gameManager;
 
     private Vector3 _moveInput;
 
@@ -112,6 +114,10 @@ public class ThirdPersonController : MonoBehaviour
 
     private void Awake() {
         // behold my true power
+        if (PlayerData.checkpointsReached == 0)
+        {
+            this.transform.position = PlayerData.levelCoords;
+        }
         if (PlayerData.checkpointsReached == 1)
         {
             this.transform.position = PlayerData.checkpt1Coords;
@@ -145,19 +151,26 @@ public class ThirdPersonController : MonoBehaviour
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
         ui = GameObject.Find("Player UI").GetComponent<UIManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
     {
         // TODO: Remove this, is just for testing
-        if (Input.GetKeyDown(KeyCode.O))
+/*        if (Input.GetKeyDown(KeyCode.O))
         {
             ui.ChangeHealth(-1);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ui.ChangeHealth(1);
-        }
+            int total = ui.starDustAmount;
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            WinManager.totalStars = total;
+            PlayerData.resetData();
+            SceneManager.LoadScene(2);
+        }*/
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -477,7 +490,15 @@ public class ThirdPersonController : MonoBehaviour
                 {
                     // The lasso object is outside range, place a red indicator
                     current_indicator.GetComponent<Image>().color = out_of_range_color;
+                }
+
+                if (closest_target_hit == null)
+                {
                     lasso_target = null;
+                }
+                else
+                {
+                    lasso_target = closest_target_hit.gameObject;
                 }
             }
         }
