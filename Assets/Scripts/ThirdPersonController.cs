@@ -160,21 +160,28 @@ public class ThirdPersonController : MonoBehaviour
                 if (State.WALK == player_state)
                 {
                     soundManager.PlaySFX(walkSFX, 1);
+                    player_animation.StopPlayback();
                     player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
-                    player_animation.Play("BananaCowboyRun");
+                    player_animation.Play("Base Layer.BananaCowboyRun");
+                    // player_animation.Play("New Layer.NoLasso");
                 }
                 else if (State.RUN == player_state)
                 {
                     soundManager.PlaySFX(runSFX, 1);
+                    player_animation.StopPlayback();
                     player_animation.speed = 2.0f; // CHANGE LATER: only because there's only one run/walk animation
-                    player_animation.Play("BananaCowboyRun");
+                    player_animation.Play("Base Layer.BananaCowboyRun");
+                    /// player_animation.Play("New Layer.NoLasso");
                 }
             }
             else if (_moveInput == Vector3.zero)
             {
                 // This will cause problems if there's other sound effects.s
                 player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
-                player_animation.Play("BananaCowboyIdle");
+                player_animation.StopPlayback();
+                player_animation.Play("Base Layer.BananaCowboyIdle");
+                player_animation.Play("New Layer.BananaCowboyIdle");
+                // player_animation.Play("New Layer.NoLasso");
             }
             if (Input.GetKeyDown(jumpKey))
             {
@@ -199,7 +206,7 @@ public class ThirdPersonController : MonoBehaviour
                     soundManager.PlaySFX(ropeWindUpSFX, 1);
                     StartLassoWindup();
                     player_animation.speed = 1.0f; // CHANGE LATER: only because there's only one run/walk animation
-                    player_animation.Play("BananaCowboyLassoWindUp");
+                    player_animation.Play("New Layer.BananaCowboyLassoWindUp");
                     break;
                 case LassoState.WOUND_UP:
                 case LassoState.SWING:
