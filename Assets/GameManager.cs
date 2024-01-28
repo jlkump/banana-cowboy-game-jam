@@ -8,16 +8,19 @@ public class GameManager : MonoBehaviour
 {
     // serialized fields
     [SerializeField] Vector3 defRespawnCoords;
-    [SerializeField] Vector3 defcheckpointCoords;
+    [SerializeField] Vector3 defCheckpoint;
+    [SerializeField] Vector3 defSecondCheckpoint;
     [SerializeField] ThirdPersonController player;
 
     public GameObject pauseMenu;
 
     private void Awake()
     {
-        // set respawn coords
-        PlayerData.respawnCoords = defRespawnCoords;
-        PlayerData.checkpointCoords = defcheckpointCoords;
+        // set respawn coords, too little time to make something intuitive
+        PlayerData.levelCoords = defRespawnCoords;
+        PlayerData.checkpt1Coords = defCheckpoint;
+        PlayerData.checkpt2Coords = defSecondCheckpoint;
+
     }
 
     // Update is called once per frame
@@ -46,11 +49,6 @@ public class GameManager : MonoBehaviour
     public void resetSceneWithRespawnCoords()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void setRespawn(Vector3 coords)
-    {
-        PlayerData.respawnCoords = coords;
     }
 
     public void ButtonsPressed(Button button)

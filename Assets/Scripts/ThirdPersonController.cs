@@ -111,11 +111,17 @@ public class ThirdPersonController : MonoBehaviour
     private State player_state = State.AIR; // TODO: Add methods for SetState, IsValidState for state machine
 
     private void Awake() {
-        if (PlayerData.checkpointsReached > 0) {
-            this.transform.position = PlayerData.checkpointCoords;
+        // behold my true power
+        if (PlayerData.checkpointsReached == 1)
+        {
+            this.transform.position = PlayerData.checkpt1Coords;
         }
-        else {
-            this.transform.position = PlayerData.respawnCoords;
+        else if (PlayerData.checkpointsReached == 2) {
+            this.transform.position = PlayerData.checkpt2Coords;
+        }
+        else
+        {
+            this.transform.position = PlayerData.levelCoords;
         }
     }
 

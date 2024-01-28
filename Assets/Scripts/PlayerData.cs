@@ -4,13 +4,12 @@ using UnityEngine;
 
 public static class PlayerData
 {
-    public static Vector3 respawnCoords;
-    public static Vector3 checkpointCoords;
-    public static int checkpointsReached;
+    public static Vector3 levelCoords; // base level respawn coords
+    public static Vector3 checkpt1Coords;
+    public static Vector3 checkpt2Coords;
+    public static int checkpointsReached; // latest checkpoint reached
 
     public static void resetData() {
         checkpointsReached = 0;
-        respawnCoords = Vector3.zero;
-        checkpointCoords = Vector3.zero;
     }
 }
