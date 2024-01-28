@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 0c46e824f16db3a4f802cac0492f6e48
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Orange Level With Updates.unity
+    guid: 342020f01f132674ca97c57fe8390ea6
   - enabled: 1
     path: Assets/Scenes/Win Screen.unity
     guid: 29b4d03ee1d0fc24b8bdb9e574da9b86

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    [SerializeField] public UIManager ui;
+    public UIManager ui;
     public SoundManager soundManager;
     public AudioClip collectSFX;
 
     private void Start()
     {
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+        ui = GameObject.Find("Player UI").GetComponent<UIManager>();
     }
 
     private void OnTriggerEnter(Collider item)

@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Device;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ThirdPersonController : MonoBehaviour
@@ -75,7 +76,8 @@ public class ThirdPersonController : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
-    [SerializeField] public GameManager gameManager;
+    // Having as serialized field messes up pause menu
+    public GameManager gameManager;
 
     private Vector3 _moveInput;
 
@@ -112,6 +114,10 @@ public class ThirdPersonController : MonoBehaviour
 
     private void Awake() {
         // behold my true power
+        if (PlayerData.checkpointsReached == 0)
+        {
+            this.transform.position = PlayerData.levelCoords;
+        }
         if (PlayerData.checkpointsReached == 1)
         {
             this.transform.position = PlayerData.checkpt1Coords;
@@ -145,6 +151,7 @@ public class ThirdPersonController : MonoBehaviour
 
         soundManager = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
         ui = GameObject.Find("Player UI").GetComponent<UIManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -156,7 +163,13 @@ public class ThirdPersonController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ui.ChangeHealth(1);
+            int total = ui.starDustAmount;
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            WinManager.totalStars = total;
+            PlayerData.resetData();
+            SceneManager.LoadScene(2);
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -477,7 +490,15 @@ public class ThirdPersonController : MonoBehaviour
                 {
                     // The lasso object is outside range, place a red indicator
                     current_indicator.GetComponent<Image>().color = out_of_range_color;
+                }
+
+                if (closest_target_hit == null)
+                {
                     lasso_target = null;
+                }
+                else
+                {
+                    lasso_target = closest_target_hit.gameObject;
                 }
             }
         }

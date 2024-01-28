@@ -10,8 +10,7 @@ public class MenuManager : MonoBehaviour
 
     public void ButtonsPressed(Button button)
     {
-        transform.GetComponent<AudioSource>().Play()
-            ;
+        transform.GetComponent<AudioSource>().Play();
         switch (button.name)
         {
             case "Play":

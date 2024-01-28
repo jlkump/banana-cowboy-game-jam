@@ -14,6 +14,7 @@ public class RespawnPoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) {
+            print("SVAE");
             // set game managers respawn coords to set coordinates
             PlayerData.checkpointsReached = checkpointNum;
         }
