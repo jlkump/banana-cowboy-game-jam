@@ -11,11 +11,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] ThirdPersonController player;
 
     public GameObject pauseMenu;
-    private Vector3 respawnCoords = Vector3.zero;
 
     private void Start()
     {
-        respawnCoords = defRespawnCoords;
+        // set default respawn coords
+        PlayerData.respawnCoords = defRespawnCoords;
     }
 
     // Update is called once per frame
@@ -43,13 +43,12 @@ public class GameManager : MonoBehaviour
     // resetScene with the players most recent respawn coordinates
     public void resetSceneWithRespawnCoords()
     {
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        player.transform.position = respawnCoords;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void setRespawn(Vector3 coords)
     {
-        respawnCoords = coords;
+        PlayerData.respawnCoords = coords;
     }
 
     public void ButtonsPressed(Button button)

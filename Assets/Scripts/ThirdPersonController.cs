@@ -112,6 +112,7 @@ public class ThirdPersonController : MonoBehaviour
 
     void Start()
     {
+        this.transform.position = PlayerData.respawnCoords;
         cameraTransform = Camera.main.transform;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
