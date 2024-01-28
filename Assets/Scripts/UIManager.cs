@@ -49,11 +49,11 @@ public class UIManager : MonoBehaviour
         {
             instance.animator.SetTrigger("Shake");
         }
-        if (health >= 0 || health < 3)
+        if (health >= 0 && health < 3)
         {
             instance.bananaIcon.GetComponent<Image>().sprite = instance.bananaIcons[health];
         }
-        if(health == 0)
+        if(health <= 0)
         {
             // TODO add death screen here
             health = 3;
