@@ -111,7 +111,242 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: BananaCowboyIdle(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:BananaCowboy
+      parentName: BananaCowboyIdle(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Boots:polySurface1
+      parentName: bananacowboy_main:BananaCowboy
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:pCylinder1
+      parentName: bananacowboy_main:BananaCowboy
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:PM3D_bananazsphere
+      parentName: bananacowboy_main:BananaCowboy
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Face
+      parentName: bananacowboy_main:PM3D_bananazsphere
+      position: {x: 0.09260412, y: 6.165485, z: 0.5148537}
+      rotation: {x: 0, y: -0, z: -0.03377404, w: 0.9994295}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Main
+      parentName: BananaCowboyIdle(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 2.2684681, y: 2.2684681, z: 2.2684681}
+    - name: bananacowboy_main:Root_Control
+      parentName: bananacowboy_main:Main
+      position: {x: -0.03673582, y: 1.0117055, z: 0.15686221}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.44082612, y: 0.44082612, z: 0.44082612}
+    - name: bananacowboy_main:Body_Control
+      parentName: bananacowboy_main:Root_Control
+      position: {x: 0.0004964697, y: 0.67693543, z: -0.19632383}
+      rotation: {x: 0, y: -0, z: -0.021930512, w: 0.9997595}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Chest_Control
+      parentName: bananacowboy_main:Body_Control
+      position: {x: -0, y: 0.74561006, z: -0.12608966}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Shoulder_Control
+      parentName: bananacowboy_main:Chest_Control
+      position: {x: 0.65352064, y: 0.060107727, z: 0.000000047683713}
+      rotation: {x: -0.022696678, y: -0.04965317, z: -0.5280168, w: 0.84747726}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Elbow_Control
+      parentName: bananacowboy_main:R_Shoulder_Control
+      position: {x: 0.638337, y: -0.031600036, z: -0.051988702}
+      rotation: {x: 0, y: -0, z: -0.1162674, w: 0.99321795}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Wrist_Control
+      parentName: bananacowboy_main:R_Elbow_Control
+      position: {x: 0.4926399, y: 0, z: -0.0332728}
+      rotation: {x: 0, y: -0, z: -0.026049534, w: 0.9996607}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Shoulder_Control
+      parentName: bananacowboy_main:Chest_Control
+      position: {x: -0.65352064, y: 0.060108945, z: 0}
+      rotation: {x: 0.011405586, y: -0.021089923, z: 0.5438287, w: 0.83885366}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Elbow_Control
+      parentName: bananacowboy_main:L_Shoulder_Control
+      position: {x: -0.63833654, y: -0.031600952, z: -0.05198867}
+      rotation: {x: 0, y: 0, z: 0.107710116, w: 0.99418235}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Face_Control
+      parentName: bananacowboy_main:Chest_Control
+      position: {x: -0.0009929392, y: 1.0104977, z: 0.112079695}
+      rotation: {x: 0, y: -0, z: -0.023694173, w: 0.99971926}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Head_Control
+      parentName: bananacowboy_main:Face_Control
+      position: {x: 0.010403298, y: 0.8744916, z: 0.18913448}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Tip_Control
+      parentName: bananacowboy_main:Root_Control
+      position: {x: 0.0026303392, y: -1.3137493, z: 0.6871334}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Leg_Control
+      parentName: bananacowboy_main:Root_Control
+      position: {x: -0.51398057, y: -0.20686507, z: -0.4049179}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Foot_Control
+      parentName: bananacowboy_main:L_Leg_Control
+      position: {x: -0.29539168, y: -2.047048, z: -0.35903126}
+      rotation: {x: 0, y: -0.11195893, z: -0, w: 0.99371284}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Leg_Control
+      parentName: bananacowboy_main:Root_Control
+      position: {x: 0.5139801, y: -0.20686676, z: -0.40491793}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Foot_Control
+      parentName: bananacowboy_main:R_Leg_Control
+      position: {x: 0.5554457, y: -2.0735178, z: 0.6137966}
+      rotation: {x: 0, y: 0.03346081, z: -0, w: 0.9994401}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Root
+      parentName: BananaCowboyIdle(Clone)
+      position: {x: 0.000000230968, y: 2.2950218, z: 0.35583693}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Body
+      parentName: bananacowboy_main:Root
+      position: {x: 0.0004964711, y: 0.67693543, z: -0.19632383}
+      rotation: {x: -0, y: -0, z: 0.0000000014551913, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Chest
+      parentName: bananacowboy_main:Body
+      position: {x: 1.0658141e-16, y: 0.74560994, z: -0.12608966}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Face
+      parentName: bananacowboy_main:Chest
+      position: {x: -0.000992938, y: 1.0104977, z: 0.112079695}
+      rotation: {x: -0, y: -0, z: -0.0000000043655746, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Head
+      parentName: bananacowboy_main:Face
+      position: {x: 0.010403298, y: 0.87449145, z: 0.18913448}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:Stem
+      parentName: bananacowboy_main:Head
+      position: {x: -5.684342e-16, y: 0.5675662, z: 0.1471046}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Clavicle
+      parentName: bananacowboy_main:Chest
+      position: {x: -0.39439392, y: 0.07906944, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Shoulder
+      parentName: bananacowboy_main:L_Clavicle
+      position: {x: -0.25912675, y: -0.018960461, z: 0.0000000015692966}
+      rotation: {x: 1.5863838e-11, y: 0.005342225, z: -0.0032472163, w: 0.99998045}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: bananacowboy_main:L_Elbow
+      parentName: bananacowboy_main:L_Shoulder
+      position: {x: -0.6383366, y: -0.03160083, z: -0.05198867}
+      rotation: {x: -1.3830458e-17, y: -0.0000000014551915, z: 0.0000000010913928, w: 1}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: bananacowboy_main:L_Wrist
+      parentName: bananacowboy_main:L_Elbow
+      position: {x: -0.49263948, y: -1.1368684e-15, z: -0.033272747}
+      rotation: {x: -0, y: -0, z: -2.0125965e-26, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Hand
+      parentName: bananacowboy_main:L_Wrist
+      position: {x: -0.19492775, y: -0.0063201645, z: -0.010397733}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Clavicle
+      parentName: bananacowboy_main:Chest
+      position: {x: 0.3943936, y: 0.07906781, z: 0.000000047100077}
+      rotation: {x: 1, y: -0, z: -3.8810497e-25, w: -6.1232336e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Shoulder
+      parentName: bananacowboy_main:R_Clavicle
+      position: {x: 0.25912705, y: 0.018960046, z: -0.000000001368609}
+      rotation: {x: -0.0000000016514711, y: 0.0053419764, z: -0.003247012, w: 0.9999805}
+      scale: {x: 1, y: 0.99999994, z: 0.99999976}
+    - name: bananacowboy_main:R_Elbow
+      parentName: bananacowboy_main:R_Shoulder
+      position: {x: 0.638337, y: 0.0316, z: 0.051988702}
+      rotation: {x: 0.0000000014551911, y: 0.000000011641532, z: 0.00000003801688, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Wrist
+      parentName: bananacowboy_main:R_Elbow
+      position: {x: 0.49264, y: 0.0000000032073713, z: 0.0332728}
+      rotation: {x: -0.0000000014551919, y: -0.000000011641533, z: -0.0000000074578566, w: 1}
+      scale: {x: 1.0000001, y: 1.0000004, z: 1.0000002}
+    - name: bananacowboy_main:R_Hand
+      parentName: bananacowboy_main:R_Wrist
+      position: {x: 0.19493, y: 0.00632, z: 0.0103977}
+      rotation: {x: -0, y: -0, z: -1.6940664e-17, w: 1}
+      scale: {x: 1, y: 1.0000005, z: 1.0000005}
+    - name: bananacowboy_main:L_Hip
+      parentName: bananacowboy_main:Root
+      position: {x: -0.51398057, y: -0.20686507, z: -0.4049179}
+      rotation: {x: -0.00010112023, y: 0.033279344, z: 0.00021616415, w: 0.9994461}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:L_Knee
+      parentName: bananacowboy_main:L_Hip
+      position: {x: -7.105427e-17, y: -0.9417045, z: 0.039208386}
+      rotation: {x: -0.000000028470819, y: 0.000000026077029, z: -0.000000011656082, w: 1}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000001}
+    - name: bananacowboy_main:L_Ankle
+      parentName: bananacowboy_main:L_Knee
+      position: {x: 0.0063201645, y: -1.138343, z: -0.052717704}
+      rotation: {x: -0, y: -0, z: -1.4574397e-16, w: 1}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1.0000001}
+    - name: bananacowboy_main:L_Foot
+      parentName: bananacowboy_main:L_Ankle
+      position: {x: 0.1329094, y: 0.33329764, z: 0.7263749}
+      rotation: {x: 0.000000031235682, y: -0.00000002235174, z: -0.000000012516919, w: 1}
+      scale: {x: 0.9999999, y: 1, z: 1}
+    - name: bananacowboy_main:Bottom
+      parentName: bananacowboy_main:Root
+      position: {x: 0.0026303392, y: -1.3137496, z: 0.6871334}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: bananacowboy_main:R_Hip
+      parentName: bananacowboy_main:Root
+      position: {x: 0.5139801, y: -0.20686677, z: -0.40491793}
+      rotation: {x: 0.9995379, y: -0.00019742563, z: 0.030397343, w: 0.000092353126}
+      scale: {x: 1, y: 1, z: 1.0000004}
+    - name: bananacowboy_main:R_Knee
+      parentName: bananacowboy_main:R_Hip
+      position: {x: 2.1316282e-16, y: 0.9417, z: -0.039208394}
+      rotation: {x: -0.0000000123473, y: -0.00000001117497, z: 0.000000015264959, w: 1}
+      scale: {x: 0.99999994, y: 1.0000004, z: 1.0000006}
+    - name: bananacowboy_main:R_Ankle
+      parentName: bananacowboy_main:R_Knee
+      position: {x: -0.00632, y: 1.138346, z: 0.052717637}
+      rotation: {x: -0, y: -0, z: -1.3798071e-16, w: 1}
+      scale: {x: 0.9999999, y: 1, z: 1.0000001}
+    - name: bananacowboy_main:R_Foot
+      parentName: bananacowboy_main:R_Ankle
+      position: {x: -0.16127536, y: 0.03272128, z: -0.79327965}
+      rotation: {x: -5.675247e-10, y: 0.000000007452698, z: -0.000000020416337, w: 1}
+      scale: {x: 0.99999994, y: 1.0000004, z: 1.0000006}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -120,15 +355,15 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: bananacowboy_main:Root
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 60ff8d1733c8a3f4bb77a25373459d5d, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
