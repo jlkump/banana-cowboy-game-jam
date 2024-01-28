@@ -82,6 +82,8 @@ GameObject:
   - component: {fileID: 218111174790794726}
   - component: {fileID: 3154319022913327611}
   - component: {fileID: 5847016902833581275}
+  - component: {fileID: -5496205215967833740}
+  - component: {fileID: -5223791971419121854}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -205,3 +207,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-5496205215967833740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170611127359325323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64f78842e0894d4297e57f0278e1e54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <checkpointNum>k__BackingField: 0
+--- !u!135 &-5223791971419121854
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170611127359325323}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
