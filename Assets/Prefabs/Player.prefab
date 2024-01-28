@@ -98,14 +98,14 @@ MonoBehaviour:
   lr: {fileID: 7452558265415343420}
   lasso_throw_pos: {fileID: 5346280605282355755}
   player_animation: {fileID: 4895518126900740432}
-  max_walk_speed: 8
-  max_run_speed: 12
-  accel_rate: 1.2
+  max_walk_speed: 15
+  max_run_speed: 30
+  accel_rate: 4.2
   decel_rate: 3.4
   accel_in_air_rate: 0.8
   decel_in_air_rate: 0.8
-  jump_impulse_force: 10
-  gravity_mult_on_jump_release: 1.5
+  jump_impulse_force: 8
+  gravity_mult_on_jump_release: 2.5
   conserve_momentum: 1
   dash_force: 20
   jump_hold_buffer: 0.3
@@ -623,7 +623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -27.000122, y: 0}
+  m_AnchoredPosition: {x: -27, y: 0}
   m_SizeDelta: {x: 164.9481, y: 129.4704}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7717294526384222396

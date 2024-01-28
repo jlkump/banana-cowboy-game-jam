@@ -35,7 +35,7 @@ public class ThirdPersonController : MonoBehaviour
     public bool conserve_momentum = true;
     public float dash_force;
     private bool can_Dash = true;
-    private float dash_Cooldown = 0.75f;
+    private float dash_Cooldown = 0.6f;
     private float dash_Timer = 0.0f;
     private bool wasInAir = false; // Keep track of the previous state
 
@@ -157,7 +157,7 @@ public class ThirdPersonController : MonoBehaviour
     void Update()
     {
         // TODO: Remove this, is just for testing
-        if (Input.GetKeyDown(KeyCode.O))
+/*        if (Input.GetKeyDown(KeyCode.O))
         {
             ui.ChangeHealth(-1);
         }
@@ -170,7 +170,7 @@ public class ThirdPersonController : MonoBehaviour
             WinManager.totalStars = total;
             PlayerData.resetData();
             SceneManager.LoadScene(2);
-        }
+        }*/
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
